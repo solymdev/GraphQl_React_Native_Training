@@ -1,38 +1,22 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client"
 
-export const QUERY_ALL_FILMS = gql` 
-query AllFilms {
-    films(order: [releaseDate_ASC]) {
-      results{
-        releaseDate
-        episodeId
+export const QUERY_ALL_FILMS = gql`
+  query AllFilms {
+    allFilms {
+      films {
         title
-           characters {
-          count
-          results {
+        director
+        releaseDate
+        speciesConnection {
+          species {
             name
+            classification
             homeworld {
               name
-            }
-            species {
-              results {
-                name
-              }
-            }
-            vehicles {
-              results {
-                name
-                model
-              }
-            }
-            starships {
-              results {
-                name
-                model
-              }
             }
           }
         }
       }
     }
-  }`
+  }
+`

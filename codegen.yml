@@ -1,12 +1,11 @@
 overwrite: true
-schema: "https://spacexdata.herokuapp.com/graphql"
-documents: "./src/components/**/*.{ts,tsx}"
+schema: "https://swapi-graphql.netlify.app/.netlify/functions/index"
+documents: "./src/schema/queries/*.ts"
 generates:
   src/generated/graphql.tsx:
-    preset: "client"
     plugins:
-     - 'typescript'
-      - 'typescript-operations'
-      - 'typescript-react-apollo'
-     config:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
       withHooks: true

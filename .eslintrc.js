@@ -21,8 +21,7 @@ module.exports = {
   },
   plugins: ["react"],
   rules: {
-    "prettier/prettier": {
-      semi: ["error", "never"],
-    },
+    "prettier/prettier": 0,
+    "no-duplicate-imports": ["error", { includeExports: true }],
   },
 }
