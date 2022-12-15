@@ -1,11 +1,12 @@
 import React from "react"
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client"
 import { Provider } from "react-redux"
-import store from "./src/store"
+import store from "./src/store/store"
+import { GRAPHQL_REPO_URL } from "./src/utils/constants"
 import MainNavigator from "./src"
 
 const client = new ApolloClient({
-  uri: "https://swapi-graphql.netlify.app/.netlify/functions/index",
+  uri: GRAPHQL_REPO_URL,
   cache: new InMemoryCache(),
 })
 

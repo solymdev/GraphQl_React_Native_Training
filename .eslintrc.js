@@ -24,4 +24,11 @@ module.exports = {
     "prettier/prettier": 0,
     "no-duplicate-imports": ["error", { includeExports: true }],
   },
+  settings: {
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+    },
+  },
 }

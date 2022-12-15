@@ -1,6 +1,6 @@
 overwrite: true
-schema: "https://swapi-graphql.netlify.app/.netlify/functions/index"
-documents: "./src/schema/queries/*.ts"
+schema: "https://rickandmortyapi.com/graphql"
+documents: "src/schema/queries/query.ts"
 generates:
   src/generated/graphql.tsx:
     plugins:

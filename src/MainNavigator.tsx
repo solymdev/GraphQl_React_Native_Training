@@ -1,16 +1,20 @@
 import React from "react"
 import { NavigationContainer } from "@react-navigation/native"
-import { createStackNavigator } from "@react-navigation/stack"
-import MainScreen from "./flows/MainScreen"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { MainScreenNavigator } from "flows/MainScreen/navigator/MainScreenNavigator"
 
-const Stack = createStackNavigator()
+const Tab = createBottomTabNavigator()
 
 export const MainNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={MainScreen} />
-      </Stack.Navigator>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Tab.Screen name="Home" component={MainScreenNavigator} />
+      </Tab.Navigator>
     </NavigationContainer>
   )
 }
