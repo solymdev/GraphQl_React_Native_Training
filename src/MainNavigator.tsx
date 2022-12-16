@@ -13,7 +13,7 @@ export const MainNavigator = () => {
           headerShown: false,
         }}
       >
-        <Tab.Screen name="Home" component={MainScreenNavigator} />
+        <Tab.Screen name="Wikipedia" component={MainScreenNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
   )

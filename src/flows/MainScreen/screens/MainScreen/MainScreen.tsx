@@ -1,7 +1,8 @@
 import React from "react"
-import { View, Text, FlatList } from "react-native"
+import { View, Text, FlatList, ScrollView } from "react-native"
 import { useAllCharactersQuery } from "../../../../generated/graphql"
 import { Cell } from "./components/Cell"
+import { Size } from "utils/size"
 import { CharacterQuery } from "models/CharactersQuery"
 import { styles } from "./MainScreen.styles"
 
@@ -23,7 +24,7 @@ export const MainScreen = ({ navigation }) => {
     )
 
   const navigateToInfo = (data: CharacterQuery) => {
-    navigation.navigate("Second", data)
+    navigation.navigate("Character", data)
   }
 
   const renderItem = (data: CharacterQuery) => (
@@ -31,10 +32,11 @@ export const MainScreen = ({ navigation }) => {
   )
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.scrollView}>
       <Text style={styles.title}>Characters</Text>
       <FlatList
         style={styles.flatListContainer}
+        contentContainerStyle={{ paddingHorizontal: Size(5 / 2) }}
         data={data.characters.results}
         renderItem={({ item }) => renderItem(item)}
         horizontal
@@ -42,10 +44,11 @@ export const MainScreen = ({ navigation }) => {
       <Text style={styles.title}>Episodes</Text>
       <FlatList
         style={styles.flatListContainer}
+        contentContainerStyle={{ paddingHorizontal: Size(5 / 2) }}
         data={data.characters.results}
         renderItem={({ item }) => renderItem(item)}
         horizontal
       ></FlatList>
-    </View>
+    </ScrollView>
   )
 }

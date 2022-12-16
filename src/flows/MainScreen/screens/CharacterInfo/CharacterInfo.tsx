@@ -3,6 +3,7 @@ import { View, Text, Animated } from "react-native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { styles } from "./CharacterInfo.styles"
 import { Size } from "utils/size"
+import Typography from "components/Typography/Typography"
 
 const Stack = createNativeStackNavigator()
 
@@ -10,8 +11,9 @@ const BANNER_H = Size(34)
 
 export const CharacterInfo = ({ navigation, route }) => {
   console.log(route.params)
+
   const scrollA = useRef(new Animated.Value(0)).current
-  const { image } = route.params
+  const { image, name } = route.params
   return (
     <View>
       <Animated.ScrollView
@@ -27,10 +29,12 @@ export const CharacterInfo = ({ navigation, route }) => {
           source={{ uri: image }}
         />
         <View style={styles.scrollableCard}>
-          <Text style={{ height: Size(40) }}>Second view</Text>
+          <Typography variant="H1" text={name} />
         </View>
       </Animated.ScrollView>
-      <Text style={{ position: "absolute", bottom: 0 }}>SURPRISE BITCH</Text>
+      <Text style={{ position: "absolute", bottom: Size(1) }}>
+        Nothing more to see
+      </Text>
     </View>
   )
 }

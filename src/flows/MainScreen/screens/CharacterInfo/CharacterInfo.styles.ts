@@ -19,11 +19,12 @@ export const styles = StyleSheet.create({
   infoContainer: {
     padding: Size(1),
   },
-  scrollableCard: { backgroundColor: "white" },
-  profileImage: {
-    width: "100%",
-    borderTopLeftRadius: Size(1),
-    borderTopRightRadius: Size(1),
-    height: Size(34),
+  scrollableCard: {
+    backgroundColor: "white",
+    borderTopLeftRadius: Size(3),
+    borderTopRightRadius: Size(3),
+    marginTop: -Size(4),
+    height: Size(40),
+    padding: Size(3),
   },
 })

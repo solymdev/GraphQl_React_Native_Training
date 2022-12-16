@@ -2,11 +2,10 @@ import { StyleSheet } from "react-native"
 import { Size } from "utils/size"
 
 export const styles = StyleSheet.create({
-  container: {
+  scrollView: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: Size(5 / 2),
+    paddingTop: Size(16),
+    backgroundColor: "white",
   },
   item: {
     backgroundColor: "#f9c2ff",
@@ -15,12 +14,14 @@ export const styles = StyleSheet.create({
     marginHorizontal: Size(2),
   },
   flatListContainer: {
-    height: Size(24),
+    height: Size(27),
     flexGrow: 0,
   },
   title: {
-    fontSize: Size(3.5),
+    paddingHorizontal: Size(5 / 2),
+    fontSize: Size(3),
     display: "flex",
     marginRight: "auto",
+    marginBottom: Size(1),
   },
 })

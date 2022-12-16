@@ -8,8 +8,14 @@ const Stack = createNativeStackNavigator()
 export const MainScreenNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="First" component={MainScreen} />
-      <Stack.Screen name="Second" component={CharacterInfo} />
+      <Stack.Screen
+        name="Rick & Morty"
+        component={MainScreen}
+        options={{
+          headerLargeTitle: true,
+        }}
+      />
+      <Stack.Screen name="Character" component={CharacterInfo} />
     </Stack.Navigator>
   )
 }

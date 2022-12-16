@@ -15,7 +15,9 @@ export const Cell = ({ data, navigateToInfo }: CellProps) => {
       <View style={styles.item}>
         <Image style={styles.imageCell} source={{ uri: image }} />
         <View style={styles.infoContainer}>
-          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+            {name}
+          </Text>
           <Text style={styles.subtitle}>{species}</Text>
         </View>
       </View>

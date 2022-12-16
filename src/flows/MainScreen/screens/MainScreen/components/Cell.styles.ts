@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: Size(1.7),
+    marginBottom: Size(1),
   },
   infoContainer: {
     padding: Size(1),
@@ -25,6 +26,6 @@ export const styles = StyleSheet.create({
     width: "100%",
     borderTopLeftRadius: Size(1),
     borderTopRightRadius: Size(1),
-    height: Size(14),
+    height: Size(16),
   },
 })

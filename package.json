@@ -10,7 +10,8 @@
     "codegen": "graphql-codegen --config codegen.yml",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@apollo/client": "^3.7.2",
@@ -53,7 +54,12 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.31.11",
+    "husky": "^8.0.2",
+    "lint-staged": ">=10",
     "prettier": "^2.7.1"
   },
-  "private": true
+  "private": true,
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
+  }
 }
