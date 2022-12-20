@@ -1,25 +1,43 @@
 import React from "react"
 import { View, Text, FlatList, ScrollView } from "react-native"
-import { useAllCharactersQuery } from "../../../../generated/graphql"
+import {
+  useAllCharactersQuery,
+  useAllEpisodesQuery,
+} from "../../../../generated/graphql"
 import { Cell } from "./components/Cell"
 import { Size } from "utils/size"
-import { CharacterQuery } from "models/CharactersQuery"
 import { styles } from "./MainScreen.styles"
+import { CharacterQuery } from "models/CharactersQuery"
+import { EpisodesQuery } from "models/episodesQuery"
 
 export const MainScreen = ({ navigation }) => {
-  const { data, error, loading } = useAllCharactersQuery()
+  const {
+    data: charactersData,
+    error: charactersError,
+    loading: charactersLoading,
+  } = useAllCharactersQuery()
+  const {
+    data: episodesData,
+    error: episodesError,
+    loading: episodesLoading,
+  } = useAllEpisodesQuery()
+  /*const {
+    data: episodesData,
+    error: episodesError,
+    loading: episodesLoading,
+  } = useAllEpisodesQuery({ variables: { filter: { episode: "", name: "" } } }) */
 
-  if (error)
-    return (
-      <View>
-        <Text>Error</Text>
-      </View>
-    )
-
-  if (loading)
+  if (charactersLoading || episodesLoading)
     return (
       <View>
         <Text>Loading...</Text>
+      </View>
+    )
+
+  if (episodesError || charactersError)
+    return (
+      <View>
+        <Text>Error</Text>
       </View>
     )
 
@@ -27,8 +45,24 @@ export const MainScreen = ({ navigation }) => {
     navigation.navigate("Character", data)
   }
 
-  const renderItem = (data: CharacterQuery) => (
-    <Cell data={data} navigateToInfo={navigateToInfo} />
+  const renderCharacterCell = (data: CharacterQuery) => (
+    <Cell
+      data={data}
+      title={data.name}
+      subtitle={data.species}
+      image={data.image}
+      navigateToInfo={navigateToInfo}
+    />
+  )
+
+  const renderEpisodeCell = (data: EpisodesQuery) => (
+    <Cell
+      data={data}
+      title={data.name}
+      subtitle={data.name}
+      image={""}
+      navigateToInfo={navigateToInfo}
+    />
   )
 
   return (
@@ -37,16 +71,16 @@ export const MainScreen = ({ navigation }) => {
       <FlatList
         style={styles.flatListContainer}
         contentContainerStyle={{ paddingHorizontal: Size(5 / 2) }}
-        data={data.characters.results}
-        renderItem={({ item }) => renderItem(item)}
+        data={charactersData.characters.results}
+        renderItem={({ item }) => renderCharacterCell(item)}
         horizontal
       ></FlatList>
       <Text style={styles.title}>Episodes</Text>
       <FlatList
         style={styles.flatListContainer}
         contentContainerStyle={{ paddingHorizontal: Size(5 / 2) }}
-        data={data.characters.results}
-        renderItem={({ item }) => renderItem(item)}
+        data={episodesData.episodes.results}
+        renderItem={({ item }) => renderEpisodeCell(item)}
         horizontal
       ></FlatList>
     </ScrollView>

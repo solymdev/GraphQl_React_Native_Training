@@ -13,7 +13,12 @@ export const CharacterInfo = ({ navigation, route }) => {
   console.log(route.params)
 
   const scrollA = useRef(new Animated.Value(0)).current
-  const { image, name } = route.params
+  const { image, name, gender, species, status, origin } = route.params
+
+  const getDimension = origin.dimension !== null ? origin.dimension : "Unknown"
+
+  const getType = origin.type !== null ? origin.type : "Unknown"
+
   return (
     <View>
       <Animated.ScrollView
@@ -29,7 +34,13 @@ export const CharacterInfo = ({ navigation, route }) => {
           source={{ uri: image }}
         />
         <View style={styles.scrollableCard}>
-          <Typography variant="H1" text={name} />
+          <Typography variant="H1" text={name} bold />
+          <Typography variant="H2" text={gender} />
+          <Typography variant="H2" text={species} />
+          <Typography variant="H2" text={status} />
+          <Typography variant="H2" text={"Ubication"} />
+          <Typography variant="H2" text={"Dimention: " + getDimension} />
+          <Typography variant="H2" text={"Type: " + getType} />
         </View>
       </Animated.ScrollView>
       <Text style={{ position: "absolute", bottom: Size(1) }}>

@@ -29,3 +29,33 @@ export const QUERY_ALL_CHARACTERS = gql`
     }
   }
 `
+
+export const QUERY_ALL_EPISODES = gql`
+  query AllEpisodes($filter: FilterEpisode) {
+    episodes(filter: $filter) {
+      info {
+        count
+        next
+        pages
+        prev
+      }
+      results {
+        air_date
+        characters {
+          created
+          gender
+          id
+          image
+          name
+          species
+          status
+          type
+        }
+        created
+        episode
+        id
+        name
+      }
+    }
+  }
+`

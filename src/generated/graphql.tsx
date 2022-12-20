@@ -206,6 +206,13 @@ export type AllCharactersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', created?: string | null, gender?: string | null, id?: string | null, image?: string | null, name?: string | null, species?: string | null, status?: string | null, type?: string | null, origin?: { __typename?: 'Location', created?: string | null, dimension?: string | null, id?: string | null, name?: string | null, type?: string | null } | null } | null> | null, info?: { __typename?: 'Info', count?: number | null, pages?: number | null, next?: number | null, prev?: number | null } | null } | null };
 
+export type AllEpisodesQueryVariables = Exact<{
+  filter?: InputMaybe<FilterEpisode>;
+}>;
+
+
+export type AllEpisodesQuery = { __typename?: 'Query', episodes?: { __typename?: 'Episodes', info?: { __typename?: 'Info', count?: number | null, next?: number | null, pages?: number | null, prev?: number | null } | null, results?: Array<{ __typename?: 'Episode', air_date?: string | null, created?: string | null, episode?: string | null, id?: string | null, name?: string | null, characters: Array<{ __typename?: 'Character', created?: string | null, gender?: string | null, id?: string | null, image?: string | null, name?: string | null, species?: string | null, status?: string | null, type?: string | null } | null> } | null> | null } | null };
+
 
 export const AllCharactersDocument = gql`
     query AllCharacters {
@@ -263,3 +270,60 @@ export function useAllCharactersLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type AllCharactersQueryHookResult = ReturnType<typeof useAllCharactersQuery>;
 export type AllCharactersLazyQueryHookResult = ReturnType<typeof useAllCharactersLazyQuery>;
 export type AllCharactersQueryResult = Apollo.QueryResult<AllCharactersQuery, AllCharactersQueryVariables>;
+export const AllEpisodesDocument = gql`
+    query AllEpisodes($filter: FilterEpisode) {
+  episodes(filter: $filter) {
+    info {
+      count
+      next
+      pages
+      prev
+    }
+    results {
+      air_date
+      characters {
+        created
+        gender
+        id
+        image
+        name
+        species
+        status
+        type
+      }
+      created
+      episode
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useAllEpisodesQuery__
+ *
+ * To run a query within a React component, call `useAllEpisodesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllEpisodesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllEpisodesQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useAllEpisodesQuery(baseOptions?: Apollo.QueryHookOptions<AllEpisodesQuery, AllEpisodesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllEpisodesQuery, AllEpisodesQueryVariables>(AllEpisodesDocument, options);
+      }
+export function useAllEpisodesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllEpisodesQuery, AllEpisodesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllEpisodesQuery, AllEpisodesQueryVariables>(AllEpisodesDocument, options);
+        }
+export type AllEpisodesQueryHookResult = ReturnType<typeof useAllEpisodesQuery>;
+export type AllEpisodesLazyQueryHookResult = ReturnType<typeof useAllEpisodesLazyQuery>;
+export type AllEpisodesQueryResult = Apollo.QueryResult<AllEpisodesQuery, AllEpisodesQueryVariables>;
