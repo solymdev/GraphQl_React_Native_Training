@@ -4,12 +4,15 @@ import { SHADOW_LEVEL1 } from "utils/shadows"
 
 export const styles = StyleSheet.create({
   item: {
-    backgroundColor: "white",
+    backgroundColor: "#f7f7f7",
     borderRadius: Size(1),
     marginVertical: Size(1),
     width: Size(16),
     marginRight: Size(2),
     ...SHADOW_LEVEL1,
+  },
+  graphicContainer: {
+    height: Size(16),
   },
   title: {
     fontSize: Size(2),

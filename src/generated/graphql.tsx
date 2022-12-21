@@ -201,7 +201,10 @@ export type QueryLocationsByIdsArgs = {
   ids: Array<Scalars['ID']>;
 };
 
-export type AllCharactersQueryVariables = Exact<{ [key: string]: never; }>;
+export type AllCharactersQueryVariables = Exact<{
+  page?: InputMaybe<Scalars['Int']>;
+  filter?: InputMaybe<FilterCharacter>;
+}>;
 
 
 export type AllCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', created?: string | null, gender?: string | null, id?: string | null, image?: string | null, name?: string | null, species?: string | null, status?: string | null, type?: string | null, origin?: { __typename?: 'Location', created?: string | null, dimension?: string | null, id?: string | null, name?: string | null, type?: string | null } | null } | null> | null, info?: { __typename?: 'Info', count?: number | null, pages?: number | null, next?: number | null, prev?: number | null } | null } | null };
@@ -215,8 +218,8 @@ export type AllEpisodesQuery = { __typename?: 'Query', episodes?: { __typename?:
 
 
 export const AllCharactersDocument = gql`
-    query AllCharacters {
-  characters {
+    query AllCharacters($page: Int, $filter: FilterCharacter) {
+  characters(page: $page, filter: $filter) {
     results {
       created
       gender
@@ -256,6 +259,8 @@ export const AllCharactersDocument = gql`
  * @example
  * const { data, loading, error } = useAllCharactersQuery({
  *   variables: {
+ *      page: // value for 'page'
+ *      filter: // value for 'filter'
  *   },
  * });
  */

@@ -13,15 +13,18 @@ export const styles = StyleSheet.create({
     marginVertical: Size(1),
     marginHorizontal: Size(2),
   },
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    marginBottom: Size(1),
+  },
   flatListContainer: {
     height: Size(27),
     flexGrow: 0,
   },
   title: {
-    paddingHorizontal: Size(5 / 2),
+    paddingLeft: Size(5 / 2),
     fontSize: Size(3),
-    display: "flex",
-    marginRight: "auto",
-    marginBottom: Size(1),
+    marginRight: Size(1),
   },
 })

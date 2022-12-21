@@ -6,11 +6,22 @@ type TypographyProps = {
   text: string
   variant: string
   bold?: boolean
+  color?: string
 }
 
-export const Typography = ({ text, variant, bold }: TypographyProps) => {
+export const Typography = ({
+  text,
+  variant,
+  bold,
+  color = "black",
+}: TypographyProps) => {
   return (
-    <Text style={[variants[variant], { fontWeight: bold ? "500" : "normal" }]}>
+    <Text
+      style={[
+        variants[variant],
+        { fontWeight: bold ? "500" : "normal", color },
+      ]}
+    >
       {text}
     </Text>
   )
