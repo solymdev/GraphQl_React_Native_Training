@@ -211,6 +211,7 @@ export type AllCharactersQuery = { __typename?: 'Query', characters?: { __typena
 
 export type AllEpisodesQueryVariables = Exact<{
   filter?: InputMaybe<FilterEpisode>;
+  page?: InputMaybe<Scalars['Int']>;
 }>;
 
 
@@ -276,8 +277,8 @@ export type AllCharactersQueryHookResult = ReturnType<typeof useAllCharactersQue
 export type AllCharactersLazyQueryHookResult = ReturnType<typeof useAllCharactersLazyQuery>;
 export type AllCharactersQueryResult = Apollo.QueryResult<AllCharactersQuery, AllCharactersQueryVariables>;
 export const AllEpisodesDocument = gql`
-    query AllEpisodes($filter: FilterEpisode) {
-  episodes(filter: $filter) {
+    query AllEpisodes($filter: FilterEpisode, $page: Int) {
+  episodes(filter: $filter, page: $page) {
     info {
       count
       next
@@ -318,6 +319,7 @@ export const AllEpisodesDocument = gql`
  * const { data, loading, error } = useAllEpisodesQuery({
  *   variables: {
  *      filter: // value for 'filter'
+ *      page: // value for 'page'
  *   },
  * });
  */

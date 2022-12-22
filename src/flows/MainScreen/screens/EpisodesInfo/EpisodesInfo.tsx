@@ -1,7 +1,7 @@
 import React, { useRef } from "react"
 import { View, Text, Animated } from "react-native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { styles } from "./CharacterInfo.styles"
+import { styles } from "./EpisodesInfo.styles"
 import { Size } from "utils/size"
 import Typography from "components/Typography/Typography"
 
@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator()
 
 const BANNER_H = Size(34)
 
-export const CharacterInfo = ({ navigation, route }) => {
+export const EpisodesInfo = ({ navigation, route }) => {
   console.log(route.params)
 
   const { image, name, gender, species, status, origin } = route.params

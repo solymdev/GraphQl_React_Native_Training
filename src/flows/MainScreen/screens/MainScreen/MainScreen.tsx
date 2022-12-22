@@ -3,6 +3,7 @@ import { View, Text, FlatList, ScrollView } from "react-native"
 import {
   useAllCharactersQuery,
   useAllEpisodesQuery,
+  AllEpisodesQuery,
   AllCharactersQuery,
 } from "../../../../generated/graphql"
 import { Cell } from "./components/Cell"
@@ -20,17 +21,13 @@ export const MainScreen = ({ navigation }) => {
     loading: charactersLoading,
     fetchMore: charactersFetchMore,
   } = useAllCharactersQuery()
+
   const {
     data: episodesData,
     error: episodesError,
     loading: episodesLoading,
     fetchMore: episodesFetchMore,
   } = useAllEpisodesQuery()
-  /*const {
-    data: episodesData,
-    error: episodesError,
-    loading: episodesLoading,
-  } = useAllEpisodesQuery({ variables: { filter: { episode: "", name: "" } } }) */
 
   const [isLoadingMore, setIsLoadingMore] = useState(false)
 
@@ -48,8 +45,12 @@ export const MainScreen = ({ navigation }) => {
       </View>
     )
 
-  const navigateToInfo = (data: CharacterQuery) => {
+  const navigateToCharacterInfo = (data: CharacterQuery) => {
     navigation.navigate("Character", data)
+  }
+
+  const navigateToEpisodeInfo = (data: EpisodesQuery) => {
+    navigation.navigate("Episode", data)
   }
 
   const renderCharacterCell = (data: CharacterQuery) => (
@@ -58,7 +59,7 @@ export const MainScreen = ({ navigation }) => {
       title={data.name}
       subtitle={data.species}
       image={data.image}
-      navigateToInfo={navigateToInfo}
+      navigateToInfo={navigateToCharacterInfo}
     />
   )
 
@@ -68,12 +69,12 @@ export const MainScreen = ({ navigation }) => {
       title={data.name}
       subtitle={data.name}
       image={""}
-      navigateToInfo={navigateToInfo}
+      navigateToInfo={navigateToEpisodeInfo}
       withNumber
     />
   )
 
-  const pushResults = (
+  const pushResultsCharacters = (
     previousQueryResult: AllCharactersQuery,
     newQueryResult: AllCharactersQuery
   ) => ({
@@ -85,6 +86,21 @@ export const MainScreen = ({ navigation }) => {
         ...newQueryResult.characters.results,
       ],
       info: { ...newQueryResult.characters.info },
+    },
+  })
+
+  const pushResultsEpisodes = (
+    previousQueryResult: AllEpisodesQuery,
+    newQueryResult: AllEpisodesQuery
+  ) => ({
+    ...previousQueryResult,
+    episodes: {
+      ...previousQueryResult.episodes,
+      results: [
+        ...previousQueryResult.episodes.results,
+        ...newQueryResult.episodes.results,
+      ],
+      info: { ...newQueryResult.episodes.info },
     },
   })
 
@@ -115,7 +131,11 @@ export const MainScreen = ({ navigation }) => {
               options: {
                 fetchMoreResult: AllCharactersQuery
               }
-            ) => pushResults(previousQueryResult, options.fetchMoreResult),
+            ) =>
+              pushResultsCharacters(
+                previousQueryResult,
+                options.fetchMoreResult
+              ),
           })
           setIsLoadingMore(false)
         }}
@@ -134,8 +154,31 @@ export const MainScreen = ({ navigation }) => {
         contentContainerStyle={{ paddingHorizontal: Size(5 / 2) }}
         data={episodesData.episodes.results}
         renderItem={({ item }) => renderEpisodeCell(item)}
+        onEndReachedThreshold={1}
+        onEndReached={async () => {
+          setIsLoadingMore(true)
+          await episodesFetchMore({
+            variables: {
+              page: episodesData.episodes.info.next,
+            },
+            updateQuery: (
+              previousQueryResult: AllEpisodesQuery,
+              options: {
+                fetchMoreResult: AllEpisodesQuery
+              }
+            ) =>
+              pushResultsEpisodes(previousQueryResult, options.fetchMoreResult),
+          })
+          setIsLoadingMore(false)
+        }}
         horizontal
       ></FlatList>
     </ScrollView>
   )
 }
+
+/*const {
+    data: episodesData,
+    error: episodesError,
+    loading: episodesLoading,
+  } = useAllEpisodesQuery({ variables: { filter: { episode: "", name: "" } } }) */

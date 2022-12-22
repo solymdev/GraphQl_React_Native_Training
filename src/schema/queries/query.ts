@@ -31,8 +31,8 @@ export const QUERY_ALL_CHARACTERS = gql`
 `
 
 export const QUERY_ALL_EPISODES = gql`
-  query AllEpisodes($filter: FilterEpisode) {
-    episodes(filter: $filter) {
+  query AllEpisodes($filter: FilterEpisode, $page: Int) {
+    episodes(filter: $filter, page: $page) {
       info {
         count
         next
