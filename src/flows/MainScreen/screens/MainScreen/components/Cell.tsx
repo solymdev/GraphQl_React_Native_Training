@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native"
 import { CharacterQuery } from "models/CharactersQuery"
 import { styles } from "./Cell.styles"
 import { EpisodesQuery } from "models/episodesQuery"
+import { LinearGradient } from "expo-linear-gradient"
 import Typography from "components/Typography/Typography"
 
 type CellProps = {
@@ -25,9 +26,27 @@ export const Cell = ({
   return (
     <TouchableOpacity onPress={() => navigateToInfo(data)}>
       <View style={styles.item}>
-        <View style={styles.graphicContainer}>
+        <View
+          style={
+            withNumber
+              ? styles.graphicContainerWithNumber
+              : styles.graphicContainer
+          }
+        >
           {withNumber ? (
-            <Typography variant="H1" text={data.id} />
+            <LinearGradient
+              // Background Linear Gradient
+              colors={["#B0FBEA", "#CDFDF2"]}
+              start={[0, 0]}
+              end={[1, 1]}
+              style={styles.graphicContainerWithNumber}
+            >
+              <Typography
+                variant="H1"
+                text={data.id}
+                styleOverride={styles.titleNumber}
+              />
+            </LinearGradient>
           ) : (
             <Image style={styles.imageCell} source={{ uri: image }} />
           )}

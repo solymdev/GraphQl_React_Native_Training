@@ -14,9 +14,19 @@ export const styles = StyleSheet.create({
   graphicContainer: {
     height: Size(16),
   },
+  graphicContainerWithNumber: {
+    height: Size(16),
+    borderTopLeftRadius: Size(1),
+    borderTopRightRadius: Size(1),
+  },
   title: {
     fontSize: Size(2),
     fontWeight: "500",
+  },
+  titleNumber: {
+    fontSize: Size(5),
+    paddingHorizontal: Size(2),
+    paddingVertical: Size(1),
   },
   subtitle: {
     fontSize: Size(1.7),

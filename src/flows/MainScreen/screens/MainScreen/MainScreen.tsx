@@ -5,7 +5,7 @@ import {
   useAllEpisodesQuery,
   AllEpisodesQuery,
   AllCharactersQuery,
-} from "../../../../generated/graphql"
+} from "generated/graphql"
 import { Cell } from "./components/Cell"
 import { Size } from "utils/size"
 import Typography from "components/Typography/Typography"
