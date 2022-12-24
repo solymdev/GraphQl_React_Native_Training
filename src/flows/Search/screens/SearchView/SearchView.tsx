@@ -58,19 +58,21 @@ export const SearchView = ({ navigation }) => {
   if (!data) return <></>
 
   return (
-    <FlatList
-      style={{ paddingTop: 80 }}
-      data={data.characters.results.slice(0, 4)}
-      renderItem={({ item }) => (
-        <View>
-          <TouchableOpacity
-            style={{ padding: 16 }}
-            onPress={() => navigateToCharacterInfo(item)}
-          >
-            <Typography variant="paragraph" text={item.name} />
-          </TouchableOpacity>
-        </View>
-      )}
-    ></FlatList>
+    <View style={{ paddingTop: 80 }}>
+      <Typography text="Characters" variant="H3" bold />
+      <FlatList
+        data={data.characters.results.slice(0, 4)}
+        renderItem={({ item }) => (
+          <View>
+            <TouchableOpacity
+              style={{ padding: 16 }}
+              onPress={() => navigateToCharacterInfo(item)}
+            >
+              <Typography variant="paragraph" text={item.name} />
+            </TouchableOpacity>
+          </View>
+        )}
+      ></FlatList>
+    </View>
   )
 }
