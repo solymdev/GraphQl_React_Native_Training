@@ -12,7 +12,7 @@ import Typography from "components/Typography/Typography"
 import { styles } from "./MainScreen.styles"
 import { CharacterQuery } from "models/CharactersQuery"
 import ContentLoader from "react-native-content-loader"
-import { Circle, Rect } from "react-native-svg"
+import { Rect } from "react-native-svg"
 import { EpisodesQuery } from "models/episodesQuery"
 import { COLORS } from "utils/colors"
 
@@ -33,10 +33,68 @@ export const MainScreen = ({ navigation }) => {
 
   const [isLoadingMore, setIsLoadingMore] = useState(false)
 
-  if (charactersLoading || episodesLoading)
+  if (!charactersLoading || episodesLoading)
     return (
-      <View>
-        <Text>Loading...</Text>
+      <View style={styles.loadingContainer}>
+        <ContentLoader height={500} width={"100%"} duration={1000}>
+          <Rect x={Size(5 / 2)} y="2" rx="5" ry="5" width="194" height="28" />
+          <Rect
+            x={Size(5 / 2)}
+            y={Size(5)}
+            rx="5"
+            ry="5"
+            width={Size(16)}
+            height={Size(19)}
+          />
+          <Rect
+            x={Size(20)}
+            y={Size(5)}
+            rx="5"
+            ry="5"
+            width={Size(16)}
+            height={Size(19)}
+          />
+          <Rect
+            x="300"
+            y={Size(5)}
+            rx="5"
+            ry="5"
+            width={Size(14)}
+            height={Size(19)}
+          />
+          <Rect
+            x={Size(5 / 2)}
+            y={Size(27)}
+            rx="5"
+            ry="5"
+            width="194"
+            height="28"
+          />
+          <Rect
+            x={Size(5 / 2)}
+            y={Size(32)}
+            rx="5"
+            ry="5"
+            width={Size(16)}
+            height={Size(19)}
+          />
+          <Rect
+            x={Size(20)}
+            y={Size(32)}
+            rx="5"
+            ry="5"
+            width={Size(16)}
+            height={Size(19)}
+          />
+          <Rect
+            x="300"
+            y={Size(32)}
+            rx="5"
+            ry="5"
+            width={Size(14)}
+            height={Size(19)}
+          />
+        </ContentLoader>
       </View>
     )
 
@@ -116,12 +174,6 @@ export const MainScreen = ({ navigation }) => {
           color={COLORS.secondary}
         />
       </View>
-      <ContentLoader height={300} duration={1000}>
-        <Rect x="11" y="2" rx="5" ry="5" width="194" height="28" />
-        <Rect x="7" y="40" rx="5" ry="5" width="88" height="94" />
-        <Rect x="117" y="40" rx="5" ry="5" width="88" height="94" />
-        <Rect x="230" y="40" rx="5" ry="5" width="88" height="94" />
-      </ContentLoader>
       <FlatList
         style={styles.flatListContainer}
         contentContainerStyle={{ paddingHorizontal: Size(5 / 2) }}
