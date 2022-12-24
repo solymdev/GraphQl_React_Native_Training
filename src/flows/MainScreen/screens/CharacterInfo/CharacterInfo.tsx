@@ -14,9 +14,9 @@ export const CharacterInfo = ({ navigation, route }) => {
 
   const { image, name, gender, species, status, origin } = route.params
 
-  const getDimension = origin.dimension !== null ? origin.dimension : "Unknown"
+  const getDimension = origin && origin.dimension ? origin.dimension : "Unknown"
 
-  const getType = origin.type !== null ? origin.type : "Unknown"
+  const getType = origin && origin.type ? origin.type : "Unknown"
 
   const scrollA = useRef(new Animated.Value(0)).current
 

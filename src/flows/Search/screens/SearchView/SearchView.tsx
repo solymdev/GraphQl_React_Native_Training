@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react"
 import { useAllCharactersQuery } from "generated/graphql"
 import { debounce } from "lodash"
 import Typography from "components/Typography/Typography"
-import { ScrollView } from "react-native-gesture-handler"
+import { CharacterQuery } from "models/CharactersQuery"
+import { FlatList } from "react-native-gesture-handler"
+import { TouchableOpacity, View } from "react-native"
 
 export const SearchView = ({ navigation }) => {
   const [searchText, setSearchText] = useState("")
@@ -45,16 +47,30 @@ export const SearchView = ({ navigation }) => {
 
   console.log(data)
 
+  const navigateToCharacterInfo = (data: CharacterQuery) => {
+    navigation.navigate("Character", data)
+  }
+
   if (error) return <Typography variant="paragraph" text={"Error"} />
 
   if (loading) return <Typography variant="paragraph" text={"Loading"} />
 
+  if (!data) return <></>
+
   return (
-    <ScrollView style={{ paddingTop: 80 }}>
-      {data &&
-        data.characters.results.map((d) => (
-          <Typography key={d.id} variant="paragraph" text={d.name} />
-        ))}
-    </ScrollView>
+    <FlatList
+      style={{ paddingTop: 80 }}
+      data={data.characters.results.slice(0, 4)}
+      renderItem={({ item }) => (
+        <View>
+          <TouchableOpacity
+            style={{ padding: 16 }}
+            onPress={() => navigateToCharacterInfo(item)}
+          >
+            <Typography variant="paragraph" text={item.name} />
+          </TouchableOpacity>
+        </View>
+      )}
+    ></FlatList>
   )
 }

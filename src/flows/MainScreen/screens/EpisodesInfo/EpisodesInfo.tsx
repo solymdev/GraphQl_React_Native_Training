@@ -21,7 +21,9 @@ export const EpisodesInfo = ({ navigation, route }) => {
 
   const scrollA = useRef(new Animated.Value(0)).current
 
-  const navigateToInfo = () => console.log()
+  const navigateToInfo = (data: CharacterQuery) => {
+    navigation.navigate("Character", data)
+  }
 
   return (
     <View style={styles.container}>
@@ -64,7 +66,7 @@ export const EpisodesInfo = ({ navigation, route }) => {
                 title={character.name}
                 subtitle={character.name}
                 image={character.image}
-                navigateToInfo={navigateToInfo}
+                navigateToInfo={() => navigateToInfo(character)}
               />
             ))}
           </ScrollView>
