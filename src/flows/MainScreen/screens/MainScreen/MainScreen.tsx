@@ -11,6 +11,8 @@ import { Size } from "utils/size"
 import Typography from "components/Typography/Typography"
 import { styles } from "./MainScreen.styles"
 import { CharacterQuery } from "models/CharactersQuery"
+import ContentLoader from "react-native-content-loader"
+import { Circle, Rect } from "react-native-svg"
 import { EpisodesQuery } from "models/episodesQuery"
 import { COLORS } from "utils/colors"
 
@@ -114,6 +116,12 @@ export const MainScreen = ({ navigation }) => {
           color={COLORS.secondary}
         />
       </View>
+      <ContentLoader height={300} duration={1000}>
+        <Rect x="11" y="2" rx="5" ry="5" width="194" height="28" />
+        <Rect x="7" y="40" rx="5" ry="5" width="88" height="94" />
+        <Rect x="117" y="40" rx="5" ry="5" width="88" height="94" />
+        <Rect x="230" y="40" rx="5" ry="5" width="88" height="94" />
+      </ContentLoader>
       <FlatList
         style={styles.flatListContainer}
         contentContainerStyle={{ paddingHorizontal: Size(5 / 2) }}
