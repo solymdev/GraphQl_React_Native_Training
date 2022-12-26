@@ -11,10 +11,9 @@ import { Size } from "utils/size"
 import Typography from "components/Typography/Typography"
 import { styles } from "./MainScreen.styles"
 import { CharacterQuery } from "models/CharactersQuery"
-import ContentLoader from "react-native-content-loader"
-import { Rect } from "react-native-svg"
 import { EpisodesQuery } from "models/episodesQuery"
 import { COLORS } from "utils/colors"
+import { AnimationLoader } from "./components/AnimationLoader"
 
 export const MainScreen = ({ navigation }) => {
   const {
@@ -33,75 +32,17 @@ export const MainScreen = ({ navigation }) => {
 
   const [isLoadingMore, setIsLoadingMore] = useState(false)
 
-  if (!charactersLoading || episodesLoading)
+  if (charactersLoading || episodesLoading)
     return (
       <View style={styles.loadingContainer}>
-        <ContentLoader height={500} width={"100%"} duration={1000}>
-          <Rect x={Size(5 / 2)} y="2" rx="5" ry="5" width="194" height="28" />
-          <Rect
-            x={Size(5 / 2)}
-            y={Size(5)}
-            rx="5"
-            ry="5"
-            width={Size(16)}
-            height={Size(19)}
-          />
-          <Rect
-            x={Size(20)}
-            y={Size(5)}
-            rx="5"
-            ry="5"
-            width={Size(16)}
-            height={Size(19)}
-          />
-          <Rect
-            x="300"
-            y={Size(5)}
-            rx="5"
-            ry="5"
-            width={Size(14)}
-            height={Size(19)}
-          />
-          <Rect
-            x={Size(5 / 2)}
-            y={Size(27)}
-            rx="5"
-            ry="5"
-            width="194"
-            height="28"
-          />
-          <Rect
-            x={Size(5 / 2)}
-            y={Size(32)}
-            rx="5"
-            ry="5"
-            width={Size(16)}
-            height={Size(19)}
-          />
-          <Rect
-            x={Size(20)}
-            y={Size(32)}
-            rx="5"
-            ry="5"
-            width={Size(16)}
-            height={Size(19)}
-          />
-          <Rect
-            x="300"
-            y={Size(32)}
-            rx="5"
-            ry="5"
-            width={Size(14)}
-            height={Size(19)}
-          />
-        </ContentLoader>
+        <AnimationLoader />
       </View>
     )
 
   if (episodesError || charactersError)
     return (
-      <View>
-        <Text>Error</Text>
+      <View style={styles.errorContainer}>
+        <Text>Ups... something went wrong</Text>
       </View>
     )
 

@@ -10,6 +10,9 @@ export const styles = StyleSheet.create({
   loadingContainer: {
     paddingTop: Size(17),
   },
+  errorContainer: {
+    paddingTop: Size(27),
+  },
   item: {
     backgroundColor: "#f9c2ff",
     padding: Size(5 / 2),

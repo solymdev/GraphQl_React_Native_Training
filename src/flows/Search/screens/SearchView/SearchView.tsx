@@ -1,15 +1,30 @@
 import React, { useEffect, useState } from "react"
-import { useAllCharactersQuery } from "generated/graphql"
+import { useAllCharactersQuery, useAllEpisodesQuery } from "generated/graphql"
 import { debounce } from "lodash"
 import Typography from "components/Typography/Typography"
 import { CharacterQuery } from "models/CharactersQuery"
-import { FlatList } from "react-native-gesture-handler"
-import { TouchableOpacity, View } from "react-native"
+import { TouchableOpacity, View, ScrollView } from "react-native"
+import { styles } from "./SearchView.styles"
+import { EpisodesQuery } from "models/episodesQuery"
 
 export const SearchView = ({ navigation }) => {
   const [searchText, setSearchText] = useState("")
   const [isSkipEnabled, setSkip] = useState(true)
-  const { data, loading, error } = useAllCharactersQuery({
+  const {
+    data: charactersData,
+    loading: charactersLoading,
+    error: charactersError,
+  } = useAllCharactersQuery({
+    variables: {
+      filter: { name: searchText },
+    },
+    skip: isSkipEnabled,
+  })
+  const {
+    data: episodesData,
+    loading: episodesLoading,
+    error: episodesError,
+  } = useAllEpisodesQuery({
     variables: {
       filter: { name: searchText },
     },
@@ -45,34 +60,60 @@ export const SearchView = ({ navigation }) => {
     })
   }, [navigation])
 
-  console.log(data)
-
   const navigateToCharacterInfo = (data: CharacterQuery) => {
     navigation.navigate("Character", data)
   }
 
-  if (error) return <Typography variant="paragraph" text={"Error"} />
+  const navigateToEpisodeInfo = (data: EpisodesQuery) => {
+    navigation.navigate("Episode", data)
+  }
 
-  if (loading) return <Typography variant="paragraph" text={"Loading"} />
+  if (episodesError || charactersError)
+    return <Typography variant="paragraph" text={"Error"} />
 
-  if (!data) return <></>
+  if (episodesLoading || charactersLoading)
+    return <Typography variant="paragraph" text={"Loading"} />
+
+  if (!episodesData || !charactersData) return <></>
 
   return (
-    <View style={{ paddingTop: 80 }}>
-      <Typography text="Characters" variant="H3" bold />
-      <FlatList
-        data={data.characters.results.slice(0, 4)}
-        renderItem={({ item }) => (
+    <ScrollView style={styles.searchViewContainer}>
+      <Typography
+        styleOverride={styles.charactersTitle}
+        text="Characters"
+        variant="H3"
+        bold
+      />
+      <View style={styles.charactersList}>
+        {charactersData.characters.results.slice(0, 4).map((character) => (
           <View>
             <TouchableOpacity
-              style={{ padding: 16 }}
-              onPress={() => navigateToCharacterInfo(item)}
+              style={styles.itemCell}
+              onPress={() => navigateToCharacterInfo(character)}
             >
-              <Typography variant="paragraph" text={item.name} />
+              <Typography variant="paragraph" text={character.name} />
             </TouchableOpacity>
           </View>
-        )}
-      ></FlatList>
-    </View>
+        ))}
+      </View>
+      <Typography
+        styleOverride={styles.charactersTitle}
+        text="Episodes"
+        variant="H3"
+        bold
+      />
+      <View style={styles.episodesList}>
+        {episodesData.episodes.results.slice(0, 4).map((episode) => (
+          <View>
+            <TouchableOpacity
+              style={styles.itemCell}
+              onPress={() => navigateToEpisodeInfo(episode)}
+            >
+              <Typography variant="paragraph" text={episode.name} />
+            </TouchableOpacity>
+          </View>
+        ))}
+      </View>
+    </ScrollView>
   )
 }
