@@ -9,6 +9,24 @@ export const styles = StyleSheet.create({
     width: Size(16),
     marginRight: Size(2),
   },
+  container: {
+    backgroundColor: "white",
+  },
+  noMoreTitle: {
+    position: "absolute",
+    bottom: Size(1),
+    left: Size(4),
+  },
+  paddingTitle: {
+    marginBottom: Size(1),
+  },
+  titleContainer: {
+    flexDirection: "row",
+    marginBottom: Size(1),
+  },
+  titleName: {
+    marginRight: Size(1),
+  },
   title: {
     fontSize: Size(2),
     fontWeight: "500",

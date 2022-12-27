@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { styles } from "./CharacterInfo.styles"
 import { Size } from "utils/size"
 import Typography from "components/Typography/Typography"
+import { Ionicons } from "@expo/vector-icons"
 
 const Stack = createNativeStackNavigator()
 
@@ -20,8 +21,13 @@ export const CharacterInfo = ({ navigation, route }) => {
 
   const scrollA = useRef(new Animated.Value(0)).current
 
+  const genderCharacter =
+    gender === "Female"
+      ? { name: "female-outline", color: "pink" }
+      : { name: "man-outline", color: "blue" }
+
   return (
-    <View>
+    <View style={styles.container}>
       <Animated.ScrollView
         style={{ zIndex: 2 }}
         onScroll={Animated.event(
@@ -35,18 +41,40 @@ export const CharacterInfo = ({ navigation, route }) => {
           source={{ uri: image }}
         />
         <View style={styles.scrollableCard}>
-          <Typography variant="H1" text={name} bold />
-          <Typography variant="H2" text={gender} />
-          <Typography variant="H2" text={species} />
-          <Typography variant="H2" text={status} />
-          <Typography variant="H2" text={"Ubication"} />
-          <Typography variant="H2" text={"Dimention: " + getDimension} />
-          <Typography variant="H2" text={"Type: " + getType} />
+          <View style={styles.titleContainer}>
+            <Typography
+              variant="H1"
+              styleOverride={styles.titleName}
+              text={name}
+              bold
+            />
+            <Ionicons
+              // @ts-ignore
+              name={genderCharacter.name}
+              size={Size(4)}
+              color={genderCharacter.color}
+            />
+          </View>
+          <Typography variant="H3" text={"Specie"} />
+          <Typography
+            variant="H2"
+            styleOverride={styles.paddingTitle}
+            text={species}
+            bold
+          />
+          <Typography variant="H3" text={"Status"} />
+          <Typography
+            variant="H2"
+            text={status}
+            bold
+            styleOverride={styles.paddingTitle}
+          />
+          <Typography variant="H3" text={"Ubication"} />
+          <Typography variant="H2" text={"Dimention: " + getDimension} bold />
+          <Typography variant="H2" text={"Type: " + getType} bold />
         </View>
       </Animated.ScrollView>
-      <Text style={{ position: "absolute", bottom: Size(1) }}>
-        Nothing more to see
-      </Text>
+      <Text style={styles.noMoreTitle}>Nothing more to see</Text>
     </View>
   )
 }
