@@ -201,6 +201,14 @@ export type QueryLocationsByIdsArgs = {
   ids: Array<Scalars['ID']>;
 };
 
+export type EpisodesGeneralInfoQueryVariables = Exact<{
+  filter?: InputMaybe<FilterEpisode>;
+  page?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type EpisodesGeneralInfoQuery = { __typename?: 'Query', episodes?: { __typename?: 'Episodes', info?: { __typename?: 'Info', count?: number | null, next?: number | null, pages?: number | null, prev?: number | null } | null, results?: Array<{ __typename?: 'Episode', episode?: string | null, id?: string | null, name?: string | null } | null> | null } | null };
+
 export type CharactersGeneralInfoQueryVariables = Exact<{
   filter?: InputMaybe<FilterCharacter>;
   page?: InputMaybe<Scalars['Int']>;
@@ -226,6 +234,52 @@ export type AllEpisodesQueryVariables = Exact<{
 export type AllEpisodesQuery = { __typename?: 'Query', episodes?: { __typename?: 'Episodes', info?: { __typename?: 'Info', count?: number | null, next?: number | null, pages?: number | null, prev?: number | null } | null, results?: Array<{ __typename?: 'Episode', air_date?: string | null, created?: string | null, episode?: string | null, id?: string | null, name?: string | null, characters: Array<{ __typename?: 'Character', created?: string | null, gender?: string | null, id?: string | null, image?: string | null, name?: string | null, species?: string | null, status?: string | null, type?: string | null } | null> } | null> | null } | null };
 
 
+export const EpisodesGeneralInfoDocument = gql`
+    query EpisodesGeneralInfo($filter: FilterEpisode, $page: Int) {
+  episodes(filter: $filter, page: $page) {
+    info {
+      count
+      next
+      pages
+      prev
+    }
+    results {
+      episode
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useEpisodesGeneralInfoQuery__
+ *
+ * To run a query within a React component, call `useEpisodesGeneralInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEpisodesGeneralInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEpisodesGeneralInfoQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useEpisodesGeneralInfoQuery(baseOptions?: Apollo.QueryHookOptions<EpisodesGeneralInfoQuery, EpisodesGeneralInfoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EpisodesGeneralInfoQuery, EpisodesGeneralInfoQueryVariables>(EpisodesGeneralInfoDocument, options);
+      }
+export function useEpisodesGeneralInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EpisodesGeneralInfoQuery, EpisodesGeneralInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EpisodesGeneralInfoQuery, EpisodesGeneralInfoQueryVariables>(EpisodesGeneralInfoDocument, options);
+        }
+export type EpisodesGeneralInfoQueryHookResult = ReturnType<typeof useEpisodesGeneralInfoQuery>;
+export type EpisodesGeneralInfoLazyQueryHookResult = ReturnType<typeof useEpisodesGeneralInfoLazyQuery>;
+export type EpisodesGeneralInfoQueryResult = Apollo.QueryResult<EpisodesGeneralInfoQuery, EpisodesGeneralInfoQueryVariables>;
 export const CharactersGeneralInfoDocument = gql`
     query CharactersGeneralInfo($filter: FilterCharacter, $page: Int) {
   characters(filter: $filter, page: $page) {

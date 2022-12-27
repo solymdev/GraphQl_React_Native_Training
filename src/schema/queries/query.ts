@@ -1,5 +1,23 @@
 import { gql } from "@apollo/client"
 
+export const QUERY_EPISODES_GENERAL_INDO = gql`
+  query EpisodesGeneralInfo($filter: FilterEpisode, $page: Int) {
+    episodes(filter: $filter, page: $page) {
+      info {
+        count
+        next
+        pages
+        prev
+      }
+      results {
+        episode
+        id
+        name
+      }
+    }
+  }
+`
+
 export const QUERY_CHARACTERS_GENERAL_INFO = gql`
   query CharactersGeneralInfo($filter: FilterCharacter, $page: Int) {
     characters(filter: $filter, page: $page) {

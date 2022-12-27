@@ -9,21 +9,34 @@ import { ScrollView } from "react-native-gesture-handler"
 import { CharacterQuery } from "models/CharactersQuery"
 import { COLORS } from "utils/colors"
 import { Cell } from "../MainScreen/components/Cell"
+import { useAllEpisodesQuery } from "generated/graphql"
 
 const Stack = createNativeStackNavigator()
 
 const BANNER_H = Size(34)
 
 export const EpisodesInfo = ({ navigation, route }) => {
-  console.log(route.params)
-
-  const { name, characters, episode } = route.params
+  const { name, episode } = route.params
 
   const scrollA = useRef(new Animated.Value(0)).current
 
-  const navigateToInfo = (data: CharacterQuery) => {
+  const {
+    data: episodesData,
+    error: episodesError,
+    loading: episodesLoading,
+    fetchMore: episodesFetchMore,
+  } = useAllEpisodesQuery({
+    variables: { filter: { episode: episode, name: name } },
+  })
+
+  if (episodesLoading) return <></>
+
+  if (episodesError) return <></>
+
+  const data = episodesData.episodes.results[0]
+
+  const navigateToInfo = (data: CharacterQuery) =>
     navigation.navigate("Character", data)
-  }
 
   return (
     <View style={styles.container}>
@@ -38,8 +51,9 @@ export const EpisodesInfo = ({ navigation, route }) => {
         <Animated.Image
           style={animatedBannerStyle.profileImage(scrollA)}
           source={{
-            uri: characters[getRandomNumberInRange(0, characters.length - 1)]
-              .image,
+            uri: data.characters[
+              getRandomNumberInRange(0, data.characters.length - 1)
+            ].image,
           }}
         />
         <View style={styles.scrollableCard}>
@@ -53,13 +67,13 @@ export const EpisodesInfo = ({ navigation, route }) => {
             />
             <Typography
               styleOverride={styles.countTitle}
-              text={characters.length}
+              text={String(data.characters.length)}
               variant="H2"
               color={COLORS.secondary}
             />
           </View>
           <ScrollView horizontal>
-            {characters.map((character: CharacterQuery) => (
+            {data.characters.map((character: CharacterQuery) => (
               <Cell
                 key={character.id}
                 data={character}

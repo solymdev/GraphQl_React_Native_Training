@@ -1,8 +1,10 @@
 import React, { useRef } from "react"
-import { View, Text, Animated } from "react-native"
+import { View, Text, Animated, ScrollView } from "react-native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { styles } from "./CharacterInfo.styles"
 import { Size } from "utils/size"
+import { EpisodesQuery } from "models/episodesQuery"
+import { Cell } from "../MainScreen/components/Cell"
 import { useAllCharactersQuery } from "generated/graphql"
 import Typography from "components/Typography/Typography"
 import { Ionicons } from "@expo/vector-icons"
@@ -12,8 +14,9 @@ const Stack = createNativeStackNavigator()
 const BANNER_H = Size(34)
 
 export const CharacterInfo = ({ navigation, route }) => {
-  const scrollA = useRef(new Animated.Value(0)).current
   const { name, species } = route.params
+
+  const scrollA = useRef(new Animated.Value(0)).current
 
   const {
     data: charactersData,
@@ -34,12 +37,26 @@ export const CharacterInfo = ({ navigation, route }) => {
 
   const getType = data.origin && data.origin.type ? data.origin.type : "Unknown"
 
-  if (!charactersData) return <></>
-
   const genderCharacter =
     data.gender === "Female"
       ? { name: "female-outline", color: "pink" }
       : { name: "man-outline", color: "blue" }
+
+  const episodeCell = (item) => (
+    <Cell
+      data={item}
+      title={item.name}
+      subtitle={item.name}
+      image={""}
+      navigateToInfo={() => navigateToEpisodeInfo(item)}
+      withNumber
+    />
+  )
+
+  const navigateToEpisodeInfo = (data: EpisodesQuery) => {
+    console.log(data)
+    navigation.navigate("Episode", data)
+  }
 
   return (
     <View style={styles.container}>
@@ -87,6 +104,11 @@ export const CharacterInfo = ({ navigation, route }) => {
           <Typography variant="H3" text={"Ubication"} />
           <Typography variant="H2" text={"Dimention: " + getDimension} bold />
           <Typography variant="H2" text={"Type: " + getType} bold />
+          <ScrollView horizontal>
+            {data.episode.map((episode) => (
+              <View key={episode.id}>{episodeCell(episode)}</View>
+            ))}
+          </ScrollView>
         </View>
       </Animated.ScrollView>
       <Text style={styles.noMoreTitle}>Nothing more to see</Text>

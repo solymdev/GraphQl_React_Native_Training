@@ -5,12 +5,13 @@ import {
   AllEpisodesQuery,
   AllCharactersQuery,
   useCharactersGeneralInfoQuery,
+  useEpisodesGeneralInfoQuery,
 } from "generated/graphql"
 import { Cell } from "./components/Cell"
 import { Size } from "utils/size"
 import Typography from "components/Typography/Typography"
 import { styles } from "./MainScreen.styles"
-import { CharacterQuery, CharacterQueryGeneral } from "models/CharactersQuery"
+import { CharacterQuery } from "models/CharactersQuery"
 import { EpisodesQuery } from "models/episodesQuery"
 import { COLORS } from "utils/colors"
 import { AnimationLoader } from "./components/AnimationLoader"
@@ -28,7 +29,7 @@ export const MainScreen = ({ navigation }) => {
     error: episodesError,
     loading: episodesLoading,
     fetchMore: episodesFetchMore,
-  } = useAllEpisodesQuery()
+  } = useEpisodesGeneralInfoQuery()
 
   if (charactersLoading || episodesLoading)
     return (
@@ -44,64 +45,35 @@ export const MainScreen = ({ navigation }) => {
       </View>
     )
 
-  const navigateToCharacterInfo = (data: CharacterQuery) => {
-    navigation.navigate("Character", data)
+  const navigate = (
+    screenName: string,
+    data: CharacterQuery | EpisodesQuery
+  ) => {
+    navigation.navigate(screenName, data)
   }
 
-  const navigateToEpisodeInfo = (data: EpisodesQuery) => {
-    navigation.navigate("Episode", data)
+  const pushResults = (
+    previousQueryResult: AllCharactersQuery | AllEpisodesQuery,
+    newQueryResult: AllCharactersQuery | AllEpisodesQuery
+  ) => {
+    const queryKey = previousQueryResult.hasOwnProperty("episodes")
+      ? "episodes"
+      : "characters"
+
+    console.log(queryKey)
+
+    return {
+      ...previousQueryResult,
+      [queryKey]: {
+        ...previousQueryResult[queryKey],
+        results: [
+          ...previousQueryResult[queryKey].results,
+          ...newQueryResult[queryKey].results,
+        ],
+        info: { ...newQueryResult[queryKey].info },
+      },
+    }
   }
-
-  const renderCharacterCell = (data: CharacterQueryGeneral) => (
-    <Cell
-      data={data}
-      title={data.name}
-      subtitle={data.species}
-      image={data.image}
-      navigateToInfo={navigateToCharacterInfo}
-    />
-  )
-
-  const renderEpisodeCell = (data: EpisodesQuery) => (
-    <Cell
-      data={data}
-      title={data.name}
-      subtitle={data.name}
-      image={""}
-      navigateToInfo={navigateToEpisodeInfo}
-      withNumber
-    />
-  )
-
-  const pushResultsCharacters = (
-    previousQueryResult: AllCharactersQuery,
-    newQueryResult: AllCharactersQuery
-  ) => ({
-    ...previousQueryResult,
-    characters: {
-      ...previousQueryResult.characters,
-      results: [
-        ...previousQueryResult.characters.results,
-        ...newQueryResult.characters.results,
-      ],
-      info: { ...newQueryResult.characters.info },
-    },
-  })
-
-  const pushResultsEpisodes = (
-    previousQueryResult: AllEpisodesQuery,
-    newQueryResult: AllEpisodesQuery
-  ) => ({
-    ...previousQueryResult,
-    episodes: {
-      ...previousQueryResult.episodes,
-      results: [
-        ...previousQueryResult.episodes.results,
-        ...newQueryResult.episodes.results,
-      ],
-      info: { ...newQueryResult.episodes.info },
-    },
-  })
 
   const fetchNextPageCharacters = () => {
     charactersFetchMore({
@@ -113,9 +85,44 @@ export const MainScreen = ({ navigation }) => {
         options: {
           fetchMoreResult: AllCharactersQuery
         }
-      ) => pushResultsCharacters(previousQueryResult, options.fetchMoreResult),
+      ) => pushResults(previousQueryResult, options.fetchMoreResult),
     })
   }
+
+  const fetchNextPageEpisodes = () => {
+    episodesFetchMore({
+      variables: {
+        page: episodesData.episodes.info.next,
+      },
+      updateQuery: (
+        previousQueryResult: AllEpisodesQuery,
+        options: {
+          fetchMoreResult: AllEpisodesQuery
+        }
+      ) => pushResults(previousQueryResult, options.fetchMoreResult),
+    })
+  }
+
+  const characterCell = ({ item }) => (
+    <Cell
+      data={item}
+      title={item.name}
+      subtitle={item.species}
+      image={item.image}
+      navigateToInfo={() => navigate("Character", item)}
+    />
+  )
+
+  const episodeCell = ({ item }) => (
+    <Cell
+      data={item}
+      title={item.name}
+      subtitle={item.episode}
+      image={""}
+      navigateToInfo={() => navigate("Episode", item)}
+      withNumber
+    />
+  )
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -131,9 +138,10 @@ export const MainScreen = ({ navigation }) => {
         style={styles.flatListContainer}
         contentContainerStyle={{ paddingHorizontal: Size(5 / 2) }}
         data={charactersData.characters.results}
-        renderItem={({ item }) => renderCharacterCell(item)}
+        renderItem={characterCell}
         onEndReachedThreshold={1}
         onEndReached={fetchNextPageCharacters}
+        keyExtractor={(item) => item.id}
         horizontal
       />
       <View style={styles.titleContainer}>
@@ -148,22 +156,9 @@ export const MainScreen = ({ navigation }) => {
         style={styles.flatListContainer}
         contentContainerStyle={{ paddingHorizontal: Size(5 / 2) }}
         data={episodesData.episodes.results}
-        renderItem={({ item }) => renderEpisodeCell(item)}
+        renderItem={episodeCell}
         onEndReachedThreshold={1}
-        onEndReached={() => {
-          episodesFetchMore({
-            variables: {
-              page: episodesData.episodes.info.next,
-            },
-            updateQuery: (
-              previousQueryResult: AllEpisodesQuery,
-              options: {
-                fetchMoreResult: AllEpisodesQuery
-              }
-            ) =>
-              pushResultsEpisodes(previousQueryResult, options.fetchMoreResult),
-          })
-        }}
+        onEndReached={fetchNextPageEpisodes}
         horizontal
       />
     </ScrollView>
