@@ -9,6 +9,10 @@ export const styles = StyleSheet.create({
     width: Size(16),
     marginRight: Size(2),
   },
+  flatListContainer: {
+    height: Size(27),
+    flexGrow: 0,
+  },
   container: {
     backgroundColor: "white",
   },

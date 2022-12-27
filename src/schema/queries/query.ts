@@ -1,5 +1,24 @@
 import { gql } from "@apollo/client"
 
+export const QUERY_CHARACTERS_GENERAL_INFO = gql`
+  query CharactersGeneralInfo($filter: FilterCharacter, $page: Int) {
+    characters(filter: $filter, page: $page) {
+      info {
+        count
+        next
+        pages
+        prev
+      }
+      results {
+        id
+        image
+        name
+        species
+      }
+    }
+  }
+`
+
 export const QUERY_ALL_CHARACTERS = gql`
   query AllCharacters($page: Int, $filter: FilterCharacter) {
     characters(page: $page, filter: $filter) {
@@ -19,6 +38,13 @@ export const QUERY_ALL_CHARACTERS = gql`
         species
         status
         type
+        episode {
+          air_date
+          created
+          episode
+          id
+          name
+        }
       }
       info {
         count

@@ -1,16 +1,16 @@
-import React, { useState } from "react"
+import React from "react"
 import { View, Text, FlatList, ScrollView } from "react-native"
 import {
-  useAllCharactersQuery,
   useAllEpisodesQuery,
   AllEpisodesQuery,
   AllCharactersQuery,
+  useCharactersGeneralInfoQuery,
 } from "generated/graphql"
 import { Cell } from "./components/Cell"
 import { Size } from "utils/size"
 import Typography from "components/Typography/Typography"
 import { styles } from "./MainScreen.styles"
-import { CharacterQuery } from "models/CharactersQuery"
+import { CharacterQuery, CharacterQueryGeneral } from "models/CharactersQuery"
 import { EpisodesQuery } from "models/episodesQuery"
 import { COLORS } from "utils/colors"
 import { AnimationLoader } from "./components/AnimationLoader"
@@ -21,7 +21,7 @@ export const MainScreen = ({ navigation }) => {
     error: charactersError,
     loading: charactersLoading,
     fetchMore: charactersFetchMore,
-  } = useAllCharactersQuery()
+  } = useCharactersGeneralInfoQuery()
 
   const {
     data: episodesData,
@@ -29,8 +29,6 @@ export const MainScreen = ({ navigation }) => {
     loading: episodesLoading,
     fetchMore: episodesFetchMore,
   } = useAllEpisodesQuery()
-
-  const [isLoadingMore, setIsLoadingMore] = useState(false)
 
   if (charactersLoading || episodesLoading)
     return (
@@ -54,7 +52,7 @@ export const MainScreen = ({ navigation }) => {
     navigation.navigate("Episode", data)
   }
 
-  const renderCharacterCell = (data: CharacterQuery) => (
+  const renderCharacterCell = (data: CharacterQueryGeneral) => (
     <Cell
       data={data}
       title={data.name}
@@ -105,6 +103,20 @@ export const MainScreen = ({ navigation }) => {
     },
   })
 
+  const fetchNextPageCharacters = () => {
+    charactersFetchMore({
+      variables: {
+        page: charactersData.characters.info.next,
+      },
+      updateQuery: (
+        previousQueryResult: AllCharactersQuery,
+        options: {
+          fetchMoreResult: AllCharactersQuery
+        }
+      ) => pushResultsCharacters(previousQueryResult, options.fetchMoreResult),
+    })
+  }
+
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.titleContainer}>
@@ -121,27 +133,9 @@ export const MainScreen = ({ navigation }) => {
         data={charactersData.characters.results}
         renderItem={({ item }) => renderCharacterCell(item)}
         onEndReachedThreshold={1}
-        onEndReached={async () => {
-          setIsLoadingMore(true)
-          await charactersFetchMore({
-            variables: {
-              page: charactersData.characters.info.next,
-            },
-            updateQuery: (
-              previousQueryResult: AllCharactersQuery,
-              options: {
-                fetchMoreResult: AllCharactersQuery
-              }
-            ) =>
-              pushResultsCharacters(
-                previousQueryResult,
-                options.fetchMoreResult
-              ),
-          })
-          setIsLoadingMore(false)
-        }}
+        onEndReached={fetchNextPageCharacters}
         horizontal
-      ></FlatList>
+      />
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Episodes</Text>
         <Typography
@@ -156,9 +150,8 @@ export const MainScreen = ({ navigation }) => {
         data={episodesData.episodes.results}
         renderItem={({ item }) => renderEpisodeCell(item)}
         onEndReachedThreshold={1}
-        onEndReached={async () => {
-          setIsLoadingMore(true)
-          await episodesFetchMore({
+        onEndReached={() => {
+          episodesFetchMore({
             variables: {
               page: episodesData.episodes.info.next,
             },
@@ -170,16 +163,9 @@ export const MainScreen = ({ navigation }) => {
             ) =>
               pushResultsEpisodes(previousQueryResult, options.fetchMoreResult),
           })
-          setIsLoadingMore(false)
         }}
         horizontal
-      ></FlatList>
+      />
     </ScrollView>
   )
 }
-
-/*const {
-    data: episodesData,
-    error: episodesError,
-    loading: episodesLoading,
-  } = useAllEpisodesQuery({ variables: { filter: { episode: "", name: "" } } }) */

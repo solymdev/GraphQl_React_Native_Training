@@ -3,6 +3,7 @@ import { View, Text, Animated } from "react-native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { styles } from "./CharacterInfo.styles"
 import { Size } from "utils/size"
+import { useAllCharactersQuery } from "generated/graphql"
 import Typography from "components/Typography/Typography"
 import { Ionicons } from "@expo/vector-icons"
 
@@ -11,18 +12,32 @@ const Stack = createNativeStackNavigator()
 const BANNER_H = Size(34)
 
 export const CharacterInfo = ({ navigation, route }) => {
-  console.log(route.params)
-
-  const { image, name, gender, species, status, origin } = route.params
-
-  const getDimension = origin && origin.dimension ? origin.dimension : "Unknown"
-
-  const getType = origin && origin.type ? origin.type : "Unknown"
-
   const scrollA = useRef(new Animated.Value(0)).current
+  const { name, species } = route.params
+
+  const {
+    data: charactersData,
+    error: charactersError,
+    loading: charactersLoading,
+  } = useAllCharactersQuery({
+    variables: { filter: { name: name, species: species } },
+  })
+
+  if (charactersError) return <></>
+
+  if (charactersLoading) return <></>
+
+  const data = charactersData.characters.results[0]
+
+  const getDimension =
+    data.origin && data.origin.dimension ? data.origin.dimension : "Unknown"
+
+  const getType = data.origin && data.origin.type ? data.origin.type : "Unknown"
+
+  if (!charactersData) return <></>
 
   const genderCharacter =
-    gender === "Female"
+    data.gender === "Female"
       ? { name: "female-outline", color: "pink" }
       : { name: "man-outline", color: "blue" }
 
@@ -38,7 +53,7 @@ export const CharacterInfo = ({ navigation, route }) => {
       >
         <Animated.Image
           style={style.profileImage(scrollA)}
-          source={{ uri: image }}
+          source={{ uri: data.image }}
         />
         <View style={styles.scrollableCard}>
           <View style={styles.titleContainer}>
@@ -65,7 +80,7 @@ export const CharacterInfo = ({ navigation, route }) => {
           <Typography variant="H3" text={"Status"} />
           <Typography
             variant="H2"
-            text={status}
+            text={data.status}
             bold
             styleOverride={styles.paddingTitle}
           />

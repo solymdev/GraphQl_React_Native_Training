@@ -17,3 +17,11 @@ export type CharacterQuery = {
     type?: string
   }
 }
+
+export type CharacterQueryGeneral = {
+  __typename?: "Character"
+  id?: string
+  image?: string
+  name?: string
+  species?: string
+}

@@ -201,13 +201,21 @@ export type QueryLocationsByIdsArgs = {
   ids: Array<Scalars['ID']>;
 };
 
+export type CharactersGeneralInfoQueryVariables = Exact<{
+  filter?: InputMaybe<FilterCharacter>;
+  page?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type CharactersGeneralInfoQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', info?: { __typename?: 'Info', count?: number | null, next?: number | null, pages?: number | null, prev?: number | null } | null, results?: Array<{ __typename?: 'Character', id?: string | null, image?: string | null, name?: string | null, species?: string | null } | null> | null } | null };
+
 export type AllCharactersQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']>;
   filter?: InputMaybe<FilterCharacter>;
 }>;
 
 
-export type AllCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', created?: string | null, gender?: string | null, id?: string | null, image?: string | null, name?: string | null, species?: string | null, status?: string | null, type?: string | null, origin?: { __typename?: 'Location', created?: string | null, dimension?: string | null, id?: string | null, name?: string | null, type?: string | null } | null } | null> | null, info?: { __typename?: 'Info', count?: number | null, pages?: number | null, next?: number | null, prev?: number | null } | null } | null };
+export type AllCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', created?: string | null, gender?: string | null, id?: string | null, image?: string | null, name?: string | null, species?: string | null, status?: string | null, type?: string | null, origin?: { __typename?: 'Location', created?: string | null, dimension?: string | null, id?: string | null, name?: string | null, type?: string | null } | null, episode: Array<{ __typename?: 'Episode', air_date?: string | null, created?: string | null, episode?: string | null, id?: string | null, name?: string | null } | null> } | null> | null, info?: { __typename?: 'Info', count?: number | null, pages?: number | null, next?: number | null, prev?: number | null } | null } | null };
 
 export type AllEpisodesQueryVariables = Exact<{
   filter?: InputMaybe<FilterEpisode>;
@@ -218,6 +226,53 @@ export type AllEpisodesQueryVariables = Exact<{
 export type AllEpisodesQuery = { __typename?: 'Query', episodes?: { __typename?: 'Episodes', info?: { __typename?: 'Info', count?: number | null, next?: number | null, pages?: number | null, prev?: number | null } | null, results?: Array<{ __typename?: 'Episode', air_date?: string | null, created?: string | null, episode?: string | null, id?: string | null, name?: string | null, characters: Array<{ __typename?: 'Character', created?: string | null, gender?: string | null, id?: string | null, image?: string | null, name?: string | null, species?: string | null, status?: string | null, type?: string | null } | null> } | null> | null } | null };
 
 
+export const CharactersGeneralInfoDocument = gql`
+    query CharactersGeneralInfo($filter: FilterCharacter, $page: Int) {
+  characters(filter: $filter, page: $page) {
+    info {
+      count
+      next
+      pages
+      prev
+    }
+    results {
+      id
+      image
+      name
+      species
+    }
+  }
+}
+    `;
+
+/**
+ * __useCharactersGeneralInfoQuery__
+ *
+ * To run a query within a React component, call `useCharactersGeneralInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCharactersGeneralInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCharactersGeneralInfoQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useCharactersGeneralInfoQuery(baseOptions?: Apollo.QueryHookOptions<CharactersGeneralInfoQuery, CharactersGeneralInfoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CharactersGeneralInfoQuery, CharactersGeneralInfoQueryVariables>(CharactersGeneralInfoDocument, options);
+      }
+export function useCharactersGeneralInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CharactersGeneralInfoQuery, CharactersGeneralInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CharactersGeneralInfoQuery, CharactersGeneralInfoQueryVariables>(CharactersGeneralInfoDocument, options);
+        }
+export type CharactersGeneralInfoQueryHookResult = ReturnType<typeof useCharactersGeneralInfoQuery>;
+export type CharactersGeneralInfoLazyQueryHookResult = ReturnType<typeof useCharactersGeneralInfoLazyQuery>;
+export type CharactersGeneralInfoQueryResult = Apollo.QueryResult<CharactersGeneralInfoQuery, CharactersGeneralInfoQueryVariables>;
 export const AllCharactersDocument = gql`
     query AllCharacters($page: Int, $filter: FilterCharacter) {
   characters(page: $page, filter: $filter) {
@@ -237,6 +292,13 @@ export const AllCharactersDocument = gql`
       species
       status
       type
+      episode {
+        air_date
+        created
+        episode
+        id
+        name
+      }
     }
     info {
       count
