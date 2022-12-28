@@ -19,6 +19,12 @@ Small app made for quick and simple search about Rick & Morty series
 
 ## Setup instructions
 
+### Previous requisites
+
+```
+Xcode
+```
+
 ### 1. Enter the project source code folder
 
 ```sh
