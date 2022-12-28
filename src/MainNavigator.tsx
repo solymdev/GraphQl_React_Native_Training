@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import Ionicons from "@expo/vector-icons/Ionicons"
 import { MainScreenNavigator } from "flows/MainScreen/navigator/MainScreenNavigator"
 import { SearchNavigator } from "flows/Search/SearchNavigator"
+import InformationView from "flows/Information"
 
 const Tab = createBottomTabNavigator()
 
@@ -43,7 +44,7 @@ export const MainNavigator = () => {
         />
         <Tab.Screen
           name="Info"
-          component={SearchNavigator}
+          component={InformationView}
           options={{
             tabBarIcon: ({ focused }) => (
               <Ionicons

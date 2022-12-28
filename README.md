@@ -22,7 +22,7 @@ Small app made for quick and simple search about Rick & Morty series
 ### Previous requisites
 
 ```
-Xcode
+Xcode or Android Studio
 ```
 
 ### 1. Enter the project source code folder
