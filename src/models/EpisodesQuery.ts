@@ -17,3 +17,10 @@ export type EpisodesQuery = {
     type?: string
   }[]
 }
+
+export type EpisodesQueryGeneral = {
+  __typename?: "Episode"
+  episode?: string
+  id?: string
+  name?: string
+}

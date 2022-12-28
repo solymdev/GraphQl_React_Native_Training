@@ -1,7 +1,7 @@
 import React from "react"
-import { View, Text, FlatList, ScrollView } from "react-native"
+import { View, Text, ScrollView } from "react-native"
+import { FlashList } from "@shopify/flash-list"
 import {
-  useAllEpisodesQuery,
   AllEpisodesQuery,
   AllCharactersQuery,
   useCharactersGeneralInfoQuery,
@@ -11,8 +11,8 @@ import { Cell } from "./components/Cell"
 import { Size } from "utils/size"
 import Typography from "components/Typography/Typography"
 import { styles } from "./MainScreen.styles"
-import { CharacterQuery } from "models/CharactersQuery"
-import { EpisodesQuery } from "models/episodesQuery"
+import { CharacterQueryGeneral } from "models/CharactersQuery"
+import { EpisodesQueryGeneral } from "models/episodesQuery"
 import { COLORS } from "utils/colors"
 import { AnimationLoader } from "./components/AnimationLoader"
 
@@ -47,10 +47,8 @@ export const MainScreen = ({ navigation }) => {
 
   const navigate = (
     screenName: string,
-    data: CharacterQuery | EpisodesQuery
-  ) => {
-    navigation.navigate(screenName, data)
-  }
+    data: CharacterQueryGeneral | EpisodesQueryGeneral
+  ) => navigation.navigate(screenName, data)
 
   const pushResults = (
     previousQueryResult: AllCharactersQuery | AllEpisodesQuery,
@@ -59,8 +57,6 @@ export const MainScreen = ({ navigation }) => {
     const queryKey = previousQueryResult.hasOwnProperty("episodes")
       ? "episodes"
       : "characters"
-
-    console.log(queryKey)
 
     return {
       ...previousQueryResult,
@@ -104,61 +100,72 @@ export const MainScreen = ({ navigation }) => {
   }
 
   const characterCell = ({ item }) => (
-    <Cell
-      data={item}
-      title={item.name}
-      subtitle={item.species}
-      image={item.image}
-      navigateToInfo={() => navigate("Character", item)}
-    />
+    <View style={styles.cellContainer}>
+      <Cell
+        data={item}
+        title={item.name}
+        subtitle={item.species}
+        image={item.image}
+        navigateToInfo={() => navigate("Character", item)}
+      />
+    </View>
   )
 
   const episodeCell = ({ item }) => (
-    <Cell
-      data={item}
-      title={item.name}
-      subtitle={item.episode}
-      image={""}
-      navigateToInfo={() => navigate("Episode", item)}
-      withNumber
-    />
+    <View style={styles.cellContainer}>
+      <Cell
+        data={item}
+        title={item.name}
+        subtitle={item.episode}
+        navigateToInfo={() => navigate("Episode", item)}
+      />
+    </View>
   )
+
+  const characters = charactersData.characters.results
+
+  const episodes = episodesData.episodes.results
+
+  const episodesDataCount = episodesData.episodes.info.count.toString()
+
+  const charactersDataCount = charactersData.characters.info.count.toString()
 
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Characters</Text>
         <Typography
-          text={charactersData.characters.info.count.toString()}
+          text={charactersDataCount}
           variant="H2"
           color={COLORS.secondary}
         />
       </View>
-      <FlatList
-        style={styles.flatListContainer}
+      <FlashList
         contentContainerStyle={{ paddingHorizontal: Size(5 / 2) }}
-        data={charactersData.characters.results}
+        data={characters}
         renderItem={characterCell}
         onEndReachedThreshold={1}
         onEndReached={fetchNextPageCharacters}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.name}
+        estimatedItemSize={90}
         horizontal
       />
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Episodes</Text>
         <Typography
-          text={episodesData.episodes.info.count.toString()}
+          text={episodesDataCount}
           variant="H2"
           color={COLORS.secondary}
         />
       </View>
-      <FlatList
-        style={styles.flatListContainer}
+      <FlashList
         contentContainerStyle={{ paddingHorizontal: Size(5 / 2) }}
-        data={episodesData.episodes.results}
+        data={episodes}
         renderItem={episodeCell}
         onEndReachedThreshold={1}
         onEndReached={fetchNextPageEpisodes}
+        keyExtractor={(item) => item.id}
+        estimatedItemSize={90}
         horizontal
       />
     </ScrollView>

@@ -8,6 +8,7 @@ import Typography from "components/Typography/Typography"
 import { ScrollView } from "react-native-gesture-handler"
 import { CharacterQuery } from "models/CharactersQuery"
 import { COLORS } from "utils/colors"
+import { AnimationLoader } from "./components/AnimationLoader"
 import { Cell } from "../MainScreen/components/Cell"
 import { useAllEpisodesQuery } from "generated/graphql"
 
@@ -24,12 +25,11 @@ export const EpisodesInfo = ({ navigation, route }) => {
     data: episodesData,
     error: episodesError,
     loading: episodesLoading,
-    fetchMore: episodesFetchMore,
   } = useAllEpisodesQuery({
     variables: { filter: { episode: episode, name: name } },
   })
 
-  if (episodesLoading) return <></>
+  if (episodesLoading) return <AnimationLoader />
 
   if (episodesError) return <></>
 

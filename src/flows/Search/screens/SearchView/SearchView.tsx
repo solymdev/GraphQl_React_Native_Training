@@ -5,6 +5,7 @@ import Typography from "components/Typography/Typography"
 import { CharacterQuery } from "models/CharactersQuery"
 import { TouchableOpacity, View, ScrollView } from "react-native"
 import { styles } from "./SearchView.styles"
+import { AnimationLoader } from "./components/AnimationLoader"
 import { EpisodesQuery } from "models/episodesQuery"
 
 export const SearchView = ({ navigation }) => {
@@ -71,8 +72,7 @@ export const SearchView = ({ navigation }) => {
   if (episodesError || charactersError)
     return <Typography variant="paragraph" text={"Error"} />
 
-  if (episodesLoading || charactersLoading)
-    return <Typography variant="paragraph" text={"Loading"} />
+  if (episodesLoading || charactersLoading) return <AnimationLoader />
 
   if (!episodesData || !charactersData) return <></>
 
@@ -86,7 +86,7 @@ export const SearchView = ({ navigation }) => {
       />
       <View style={styles.charactersList}>
         {charactersData.characters.results.slice(0, 4).map((character) => (
-          <View>
+          <View key={character.id}>
             <TouchableOpacity
               style={styles.itemCell}
               onPress={() => navigateToCharacterInfo(character)}
@@ -104,7 +104,7 @@ export const SearchView = ({ navigation }) => {
       />
       <View style={styles.episodesList}>
         {episodesData.episodes.results.slice(0, 4).map((episode) => (
-          <View>
+          <View key={episode.id}>
             <TouchableOpacity
               style={styles.itemCell}
               onPress={() => navigateToEpisodeInfo(episode)}

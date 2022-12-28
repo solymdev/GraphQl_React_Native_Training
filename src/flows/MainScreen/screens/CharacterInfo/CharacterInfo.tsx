@@ -49,12 +49,10 @@ export const CharacterInfo = ({ navigation, route }) => {
       subtitle={item.name}
       image={""}
       navigateToInfo={() => navigateToEpisodeInfo(item)}
-      withNumber
     />
   )
 
   const navigateToEpisodeInfo = (data: EpisodesQuery) => {
-    console.log(data)
     navigation.navigate("Episode", data)
   }
 
@@ -101,7 +99,7 @@ export const CharacterInfo = ({ navigation, route }) => {
             bold
             styleOverride={styles.paddingTitle}
           />
-          <Typography variant="H3" text={"Ubication"} />
+          <Typography variant="H3" text={"Location"} />
           <Typography variant="H2" text={"Dimention: " + getDimension} bold />
           <Typography variant="H2" text={"Type: " + getType} bold />
           <ScrollView horizontal>

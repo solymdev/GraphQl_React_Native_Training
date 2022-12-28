@@ -3,7 +3,6 @@ import { Size } from "utils/size"
 
 export const styles = StyleSheet.create({
   scrollView: {
-    flex: 1,
     paddingTop: Size(16),
     backgroundColor: "white",
   },
@@ -33,4 +32,5 @@ export const styles = StyleSheet.create({
     fontSize: Size(3),
     marginRight: Size(1),
   },
+  cellContainer: { height: 216 },
 })

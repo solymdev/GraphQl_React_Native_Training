@@ -6,18 +6,30 @@ import CharacterInfo from "../screens/CharacterInfo"
 
 const Stack = createNativeStackNavigator()
 
+export enum MainScreenNavigatorScreens {
+  MAIN = "Rick & Morty",
+  CHARACTER = "Character",
+  EPISODE = "Episode",
+}
+
 export const MainScreenNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Rick & Morty"
+        name={MainScreenNavigatorScreens.MAIN}
         component={MainScreen}
         options={{
           headerLargeTitle: true,
         }}
       />
-      <Stack.Screen name="Character" component={CharacterInfo} />
-      <Stack.Screen name="Episode" component={EpisodesInfo} />
+      <Stack.Screen
+        name={MainScreenNavigatorScreens.CHARACTER}
+        component={CharacterInfo}
+      />
+      <Stack.Screen
+        name={MainScreenNavigatorScreens.EPISODE}
+        component={EpisodesInfo}
+      />
     </Stack.Navigator>
   )
 }
