@@ -4,14 +4,18 @@ Small app made for quick and simple search about Rick & Morty series
 
 ## Features
 
-- Made using GraphQl
+- Technologies used:
 
   - Custom hooks
   - Typescript
-  - Search bar
+  - GraphQL
 
 - Flashlist
+
   - For faster performance
+
+- React Native Animations
+  - Interpolation
 
 ## Setup instructions
 
