@@ -48,4 +48,10 @@ export const styles = StyleSheet.create({
     marginTop: -Size(4),
     padding: Size(3),
   },
+  episodesContainer: {
+    flexDirection: "row",
+  },
+  episodeTitle: {
+    marginRight: Size(1),
+  },
 })

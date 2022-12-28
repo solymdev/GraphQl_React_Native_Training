@@ -54,8 +54,9 @@ export const SearchView = ({ navigation }) => {
 
   useEffect(() => {
     navigation.setOptions({
+      title: "Search",
       headerSearchBarOptions: {
-        placeHolder: "Search",
+        placeHolder: "Search character or episode",
         onChangeText: (event) => handleTextChange(event),
       },
     })

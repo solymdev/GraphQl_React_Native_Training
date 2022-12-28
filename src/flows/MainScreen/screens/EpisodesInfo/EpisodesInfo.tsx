@@ -38,6 +38,8 @@ export const EpisodesInfo = ({ navigation, route }) => {
   const navigateToInfo = (data: CharacterQuery) =>
     navigation.navigate("Character", data)
 
+  console.log(episodesData.episodes.results)
+
   return (
     <View style={styles.container}>
       <Animated.ScrollView
@@ -58,12 +60,19 @@ export const EpisodesInfo = ({ navigation, route }) => {
         />
         <View style={styles.scrollableCard}>
           <Typography variant="H1" text={name} bold />
-          <Typography variant="H3" text={episode} />
+          <Typography
+            variant="H3"
+            text={episode}
+            styleOverride={styles.paddingTitle}
+          />
+          <Typography variant="H3" text={"Air Date"} />
+          <Typography variant="H2" text={data.air_date} bold />
           <View style={styles.titleContainer}>
             <Typography
               styleOverride={styles.charactersTitle}
               variant="H2"
               text={"Characters"}
+              bold
             />
             <Typography
               styleOverride={styles.countTitle}

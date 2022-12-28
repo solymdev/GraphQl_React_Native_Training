@@ -21,7 +21,7 @@ export const MainNavigator = () => {
           options={{
             tabBarIcon: ({ focused }) => (
               <Ionicons
-                name="md-checkmark-circle"
+                name="book-outline"
                 size={32}
                 color={focused ? "blue" : "gray"}
               />
@@ -35,6 +35,19 @@ export const MainNavigator = () => {
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 name="search"
+                size={32}
+                color={focused ? "blue" : "gray"}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Info"
+          component={SearchNavigator}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name="information-circle-outline"
                 size={32}
                 color={focused ? "blue" : "gray"}
               />

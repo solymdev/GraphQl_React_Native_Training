@@ -24,6 +24,9 @@ export const styles = StyleSheet.create({
   countTitle: {
     marginLeft: Size(1),
   },
+  paddingTitle: {
+    marginBottom: Size(1),
+  },
   titleContainer: {
     flexDirection: "row",
     alignItems: "baseline",

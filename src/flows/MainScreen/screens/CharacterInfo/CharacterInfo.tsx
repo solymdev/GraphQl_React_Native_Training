@@ -101,7 +101,24 @@ export const CharacterInfo = ({ navigation, route }) => {
           />
           <Typography variant="H3" text={"Location"} />
           <Typography variant="H2" text={"Dimention: " + getDimension} bold />
-          <Typography variant="H2" text={"Type: " + getType} bold />
+          <Typography
+            variant="H2"
+            styleOverride={styles.paddingTitle}
+            text={"Type: " + getType}
+            bold
+          />
+          <View style={styles.episodesContainer}>
+            <Typography
+              variant="H3"
+              styleOverride={styles.episodeTitle}
+              text={"Episodes"}
+            />
+            <Typography
+              variant="H3"
+              text={data.episode.length.toString()}
+              color={"gray"}
+            />
+          </View>
           <ScrollView horizontal>
             {data.episode.map((episode) => (
               <View key={episode.id}>{episodeCell(episode)}</View>
