@@ -2,9 +2,9 @@ import React from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import Ionicons from "@expo/vector-icons/Ionicons"
-import { MainScreenNavigator } from "flows/MainScreen/navigator/MainScreenNavigator"
-import { SearchNavigator } from "flows/Search/SearchNavigator"
-import InformationView from "flows/Information"
+import { MainScreenNavigator } from "./flows/MainScreen/navigator/MainScreenNavigator"
+import { SearchNavigator } from "./flows/Search/SearchNavigator"
+import InformationView from "./flows/Information"
 
 const Tab = createBottomTabNavigator()
 

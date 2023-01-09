@@ -3,9 +3,8 @@ import { View, Text, Image, TouchableOpacity } from "react-native"
 import { CharacterQueryGeneral } from "models/CharactersQuery"
 import { styles } from "./Cell.styles"
 import { EpisodesQueryGeneral } from "models/episodesQuery"
-import { LinearGradient } from "expo-linear-gradient"
-import { getRandomNumberInRange } from "utils/random"
-import Typography from "components/Typography/Typography"
+import { getRandomNumberInRange } from "../../../../../utils/random"
+import Typography from "../../../../../components/Typography/Typography"
 
 type CellProps = {
   data: CharacterQueryGeneral | EpisodesQueryGeneral
@@ -22,12 +21,7 @@ export const Cell = ({
   image,
   navigateToInfo,
 }: CellProps) => {
-  const gradients = [
-    ["#B0FBEA", "#CDFDF2"],
-    ["#FFD0AA", "#FFE1C9"],
-    ["#C1CFFF", "#D5DEFF"],
-    ["#F0D6FF", "#F4E1FF"],
-  ]
+  const gradients = ["#B0FBEA", "#FFD0AA", "#C1CFFF", "#F0D6FF"]
 
   return (
     <TouchableOpacity style={styles.item} onPress={() => navigateToInfo(data)}>
@@ -39,18 +33,21 @@ export const Cell = ({
         {image ? (
           <Image style={styles.imageCell} source={{ uri: image }} />
         ) : (
-          <LinearGradient
-            colors={gradients[getRandomNumberInRange(0, gradients.length)]}
-            start={[0, 0]}
-            end={[1, 1]}
-            style={styles.graphicContainerWithNumber}
+          <View
+            style={[
+              styles.graphicContainerWithNumber,
+              {
+                backgroundColor:
+                  gradients[getRandomNumberInRange(0, gradients.length)],
+              },
+            ]}
           >
             <Typography
               variant="H1"
               text={data.id}
               styleOverride={styles.titleNumber}
             />
-          </LinearGradient>
+          </View>
         )}
       </View>
       <View style={styles.infoContainer}>

@@ -1,5 +1,5 @@
 import React from "react"
-import Typography from "components/Typography/Typography"
+import Typography from "../../components/Typography/Typography"
 import { View } from "react-native"
 import { styles } from "./InformationView.styles"
 

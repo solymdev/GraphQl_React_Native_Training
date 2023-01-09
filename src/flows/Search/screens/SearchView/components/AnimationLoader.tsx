@@ -1,13 +1,14 @@
-import ContentLoader from "react-native-content-loader"
+import React from "react"
 import { Rect } from "react-native-svg"
+import ContentLoader from "react-content-loader/native"
 import { Dimensions } from "react-native"
-import { Size } from "utils/size"
+import { Size } from "../../../../../utils/size"
 
 export const AnimationLoader = () => {
   const viewWidth = Dimensions.get("window").width
   const viewHeight = Dimensions.get("window").height
   return (
-    <ContentLoader height={viewHeight} width={viewWidth} duration={1000}>
+    <ContentLoader height={viewHeight} width={viewWidth}>
       {/* cell  */}
       <Rect
         x={Size(5 / 2)}

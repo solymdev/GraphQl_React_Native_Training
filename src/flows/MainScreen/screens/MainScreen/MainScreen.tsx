@@ -6,14 +6,14 @@ import {
   AllCharactersQuery,
   useCharactersGeneralInfoQuery,
   useEpisodesGeneralInfoQuery,
-} from "generated/graphql"
+} from "../../../../generated/graphql"
 import { Cell } from "./components/Cell"
-import { Size } from "utils/size"
-import Typography from "components/Typography/Typography"
+import { Size } from "../../../../utils/size"
+import Typography from "../../../../components/Typography/Typography"
 import { styles } from "./MainScreen.styles"
 import { CharacterQueryGeneral } from "models/CharactersQuery"
 import { EpisodesQueryGeneral } from "models/episodesQuery"
-import { COLORS } from "utils/colors"
+import { COLORS } from "../../../../utils/colors"
 import { AnimationLoader } from "./components/AnimationLoader"
 
 export const MainScreen = ({ navigation }) => {

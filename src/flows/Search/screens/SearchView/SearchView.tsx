@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react"
-import { useAllCharactersQuery, useAllEpisodesQuery } from "generated/graphql"
+import {
+  useAllCharactersQuery,
+  useAllEpisodesQuery,
+} from "../../../../generated/graphql"
 import { debounce } from "lodash"
-import Typography from "components/Typography/Typography"
+import Typography from "../../../../components/Typography/Typography"
 import { CharacterQuery } from "models/CharactersQuery"
 import { TouchableOpacity, View, ScrollView } from "react-native"
 import { styles } from "./SearchView.styles"

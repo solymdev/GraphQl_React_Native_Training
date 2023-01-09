@@ -1,7 +1,9 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "types": ["node", "jest"],
+    "jsx": "react"
   },
-  "include": ["src"]
+  "include": ["src", "jest.config.ts"]
 }

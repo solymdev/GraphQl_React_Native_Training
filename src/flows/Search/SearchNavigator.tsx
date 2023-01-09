@@ -1,7 +1,7 @@
 import React from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import CharacterInfo from "flows/MainScreen/screens/CharacterInfo"
-import EpisodesInfo from "flows/MainScreen/screens/EpisodesInfo"
+import CharacterInfo from "../MainScreen/screens/CharacterInfo"
+import EpisodesInfo from "../MainScreen/screens/EpisodesInfo"
 import SearchView from "./screens/SearchView"
 
 const Stack = createNativeStackNavigator()
