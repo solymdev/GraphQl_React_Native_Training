@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native"
-import { Size } from "../../../../utils/size"
-import { SHADOW_LEVEL1 } from "../../../../utils/shadows"
+import { Size } from "utils/size"
+import { SHADOW_LEVEL1 } from "utils/shadows"
 
 export const styles = StyleSheet.create({
   searchViewContainer: {

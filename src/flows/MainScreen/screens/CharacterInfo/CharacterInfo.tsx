@@ -1,15 +1,14 @@
 import React, { useRef } from "react"
 import { View, Text, Animated, ScrollView } from "react-native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { styles } from "./CharacterInfo.styles"
-import { Size } from "../../../../utils/size"
-import { EpisodesQuery } from "../../../../models/episodesQuery"
+import { Size } from "utils/size"
+import { EpisodesQuery } from "models/episodesQuery"
 import { Cell } from "../MainScreen/components/Cell"
-import { useAllCharactersQuery } from "../../../../generated/graphql"
-import Typography from "../../../../components/Typography/Typography"
+import { useAllCharactersQuery } from "generated/graphql"
+import Typography from "components/Typography/Typography"
 import { Ionicons } from "@expo/vector-icons"
-
-const Stack = createNativeStackNavigator()
+import { AnimationLoader } from "./components/AnimationLoader"
+import ErrorView from "components/ErrorView.tsx"
 
 const BANNER_H = Size(34)
 
@@ -26,9 +25,9 @@ export const CharacterInfo = ({ navigation, route }) => {
     variables: { filter: { name: name, species: species } },
   })
 
-  if (charactersError) return <></>
+  if (charactersError) return <ErrorView />
 
-  if (charactersLoading) return <></>
+  if (charactersLoading) return <AnimationLoader />
 
   const data = charactersData.characters.results[0]
 

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import { Size } from "../../../../utils/size"
+import { Size } from "utils/size"
 
 export const styles = StyleSheet.create({
   item: {
@@ -8,6 +8,9 @@ export const styles = StyleSheet.create({
     marginVertical: Size(1),
     width: Size(16),
     marginRight: Size(2),
+  },
+  errorContainer: {
+    paddingTop: Size(27),
   },
   flatListContainer: {
     height: Size(27),

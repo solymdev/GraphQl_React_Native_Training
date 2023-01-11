@@ -3,8 +3,8 @@ import { View, Text, Image, TouchableOpacity } from "react-native"
 import { CharacterQueryGeneral } from "models/CharactersQuery"
 import { styles } from "./Cell.styles"
 import { EpisodesQueryGeneral } from "models/episodesQuery"
-import { getRandomNumberInRange } from "../../../../../utils/random"
-import Typography from "../../../../../components/Typography/Typography"
+import { getRandomNumberInRange } from "utils/random"
+import Typography from "components/Typography/Typography"
 
 type CellProps = {
   data: CharacterQueryGeneral | EpisodesQueryGeneral

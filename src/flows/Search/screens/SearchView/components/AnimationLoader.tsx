@@ -2,7 +2,7 @@ import React from "react"
 import { Rect } from "react-native-svg"
 import ContentLoader from "react-content-loader/native"
 import { Dimensions } from "react-native"
-import { Size } from "../../../../../utils/size"
+import { Size } from "utils/size"
 
 export const AnimationLoader = () => {
   const viewWidth = Dimensions.get("window").width

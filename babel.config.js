@@ -7,6 +7,12 @@ module.exports = function (api) {
         "module-resolver",
         {
           root: ["./src"],
+          alias: {
+            components: "./src/components",
+            utils: "./src/utils",
+            flows: "./src/flows",
+            generated: "./src/generated",
+          },
         },
       ],
     ],

@@ -1,18 +1,16 @@
 import React, { useRef } from "react"
 import { View, Animated } from "react-native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { styles } from "./EpisodesInfo.styles"
-import { getRandomNumberInRange } from "../../../../utils/random"
-import { Size } from "../../../../utils/size"
-import Typography from "../../../../components/Typography/Typography"
+import { getRandomNumberInRange } from "utils/random"
+import { Size } from "utils/size"
+import Typography from "components/Typography/Typography"
 import { ScrollView } from "react-native-gesture-handler"
-import { CharacterQuery } from "../../../../models/CharactersQuery"
-import { COLORS } from "../../../../utils/colors"
+import { CharacterQuery } from "models/CharactersQuery"
+import { COLORS } from "utils/colors"
 import { AnimationLoader } from "./components/AnimationLoader"
 import { Cell } from "../MainScreen/components/Cell"
-import { useAllEpisodesQuery } from "../../../../generated/graphql"
-
-const Stack = createNativeStackNavigator()
+import { useAllEpisodesQuery } from "generated/graphql"
+import ErrorView from "components/ErrorView.tsx"
 
 const BANNER_H = Size(34)
 
@@ -31,14 +29,12 @@ export const EpisodesInfo = ({ navigation, route }) => {
 
   if (episodesLoading) return <AnimationLoader />
 
-  if (episodesError) return <></>
+  if (episodesError) return <ErrorView />
 
   const data = episodesData.episodes.results[0]
 
   const navigateToInfo = (data: CharacterQuery) =>
     navigation.navigate("Character", data)
-
-  console.log(episodesData.episodes.results)
 
   return (
     <View style={styles.container}>
