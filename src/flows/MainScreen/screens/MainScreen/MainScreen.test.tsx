@@ -2,8 +2,8 @@ import React from "react"
 import { MainScreen } from "./MainScreen"
 import { render, screen } from "@testing-library/react-native"
 import { MockedProvider } from "@apollo/react-testing"
-import { CHARACTERS_GENERAL_INFO } from "test/mocks/CharactersGeneralInfo"
-import { EPISODES_GENERAL_INFO } from "test/mocks/EpisodesGeneralInfo"
+import { CHARACTERS_GENERAL_INFO } from "test/mocks/CharactersGeneralInfoMock"
+import { EPISODES_GENERAL_INFO } from "test/mocks/EpisodesGeneralInfoMock"
 
 const mocks = [CHARACTERS_GENERAL_INFO, EPISODES_GENERAL_INFO]
 

@@ -4,13 +4,14 @@ import { styles } from "./EpisodesInfo.styles"
 import { getRandomNumberInRange } from "utils/random"
 import { Size } from "utils/size"
 import Typography from "components/Typography/Typography"
-import { ScrollView } from "react-native-gesture-handler"
+import { ScrollView } from "react-native"
 import { CharacterQuery } from "models/CharactersQuery"
 import { COLORS } from "utils/colors"
 import { AnimationLoader } from "./components/AnimationLoader"
 import { Cell } from "../MainScreen/components/Cell"
 import { useAllEpisodesQuery } from "generated/graphql"
 import ErrorView from "components/ErrorView.tsx"
+import { Text } from "react-native"
 
 const BANNER_H = Size(34)
 
@@ -38,6 +39,7 @@ export const EpisodesInfo = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      <Text>a</Text>
       <Animated.ScrollView
         style={{ zIndex: 2 }}
         onScroll={Animated.event(
