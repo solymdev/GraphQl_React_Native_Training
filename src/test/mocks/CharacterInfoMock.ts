@@ -1,8 +1,14 @@
 import { AllCharactersDocument } from "generated/graphql"
 
+export const CHARACTER_INFO_VARIABLES = {
+  name: "Rick Sanchez",
+  species: "Human",
+}
+
 export const CHARACTER_INFO = {
   request: {
     query: AllCharactersDocument,
+    variables: { filter: CHARACTER_INFO_VARIABLES },
   },
   result: {
     data: {

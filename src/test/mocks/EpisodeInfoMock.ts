@@ -1,13 +1,15 @@
 import { AllEpisodesDocument } from "generated/graphql"
 
+export const EPISODE_INFO_VARIABLES = {
+  episode: "Lawnmower Dog",
+  name: "S01E02",
+}
+
 export const EPISODE_INFO = {
   request: {
     query: AllEpisodesDocument,
     variables: {
-      filter: {
-        episode: "Lawnmower Dog",
-        name: "S01E02",
-      },
+      filter: EPISODE_INFO_VARIABLES,
     },
   },
   result: {
