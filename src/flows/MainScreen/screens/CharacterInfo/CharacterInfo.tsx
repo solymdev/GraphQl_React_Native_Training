@@ -6,7 +6,7 @@ import { EpisodesQuery } from "models/episodesQuery"
 import { Cell } from "../MainScreen/components/Cell"
 import { useAllCharactersQuery } from "generated/graphql"
 import Typography from "components/Typography/Typography"
-import { Ionicons } from "@expo/vector-icons"
+import { IconAngle } from "tabler-icons-react-native"
 import { AnimationLoader } from "./components/AnimationLoader"
 import ErrorView from "components/ErrorView.tsx"
 
@@ -77,7 +77,7 @@ export const CharacterInfo = ({ navigation, route }) => {
               text={name}
               bold
             />
-            <Ionicons
+            <IconAngle
               // @ts-ignore
               name={genderCharacter.name}
               size={Size(4)}
