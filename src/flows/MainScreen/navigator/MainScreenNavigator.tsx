@@ -14,13 +14,11 @@ export enum MainScreenNavigatorScreens {
 
 export const MainScreenNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName={MainScreenNavigatorScreens.MAIN}>
       <Stack.Screen
         name={MainScreenNavigatorScreens.MAIN}
         component={MainScreen}
-        options={{
-          headerLargeTitle: true,
-        }}
+        options={{ headerLargeTitle: true }}
       />
       <Stack.Screen
         name={MainScreenNavigatorScreens.CHARACTER}

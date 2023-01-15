@@ -6,7 +6,7 @@ import { EpisodesQuery } from "models/episodesQuery"
 import { Cell } from "../MainScreen/components/Cell"
 import { useAllCharactersQuery } from "generated/graphql"
 import Typography from "components/Typography/Typography"
-import { IconAngle } from "tabler-icons-react-native"
+import { IconMan } from "tabler-icons-react-native"
 import { AnimationLoader } from "./components/AnimationLoader"
 import ErrorView from "components/ErrorView.tsx"
 
@@ -77,8 +77,7 @@ export const CharacterInfo = ({ navigation, route }) => {
               text={name}
               bold
             />
-            <IconAngle
-              // @ts-ignore
+            <IconMan
               name={genderCharacter.name}
               size={Size(4)}
               color={genderCharacter.color}
@@ -125,7 +124,11 @@ export const CharacterInfo = ({ navigation, route }) => {
           </ScrollView>
         </View>
       </Animated.ScrollView>
-      <Text style={styles.noMoreTitle}>Nothing more to see</Text>
+      <Typography
+        variant="paragraph"
+        styleOverride={styles.noMoreTitle}
+        text={"Nothing more to see"}
+      />
     </View>
   )
 }

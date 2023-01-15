@@ -11,7 +11,6 @@ import { AnimationLoader } from "./components/AnimationLoader"
 import { Cell } from "../MainScreen/components/Cell"
 import { useAllEpisodesQuery } from "generated/graphql"
 import ErrorView from "components/ErrorView.tsx"
-import { Text } from "react-native"
 
 const BANNER_H = Size(34)
 
@@ -39,7 +38,6 @@ export const EpisodesInfo = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Text>a</Text>
       <Animated.ScrollView
         style={{ zIndex: 2 }}
         onScroll={Animated.event(

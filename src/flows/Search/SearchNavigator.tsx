@@ -3,21 +3,22 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import CharacterInfo from "../MainScreen/screens/CharacterInfo"
 import EpisodesInfo from "../MainScreen/screens/EpisodesInfo"
 import SearchView from "./screens/SearchView"
+import { MainScreenNavigator } from "flows/MainScreen/navigator/MainScreenNavigator"
 
-const Stack = createNativeStackNavigator()
+const SearchStack = createNativeStackNavigator()
 
 export const SearchNavigator = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <SearchStack.Navigator initialRouteName="Search View">
+      <SearchStack.Screen
         name="Search View"
         component={SearchView}
         options={{
           headerLargeTitle: true,
         }}
       />
-      <Stack.Screen name="Character" component={CharacterInfo} />
-      <Stack.Screen name="Episode" component={EpisodesInfo} />
-    </Stack.Navigator>
+      <SearchStack.Screen name="Character" component={CharacterInfo} />
+      <SearchStack.Screen name="Episode" component={EpisodesInfo} />
+    </SearchStack.Navigator>
   )
 }

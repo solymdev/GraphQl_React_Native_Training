@@ -11,6 +11,7 @@ import { EpisodesQuery } from "models/episodesQuery"
 export const SearchView = ({ navigation }) => {
   const [searchText, setSearchText] = useState("")
   const [isSkipEnabled, setSkip] = useState(true)
+
   const {
     data: charactersData,
     loading: charactersLoading,
@@ -21,6 +22,7 @@ export const SearchView = ({ navigation }) => {
     },
     skip: isSkipEnabled,
   })
+
   const {
     data: episodesData,
     loading: episodesLoading,
@@ -86,16 +88,20 @@ export const SearchView = ({ navigation }) => {
         bold
       />
       <View style={styles.charactersList}>
-        {charactersData.characters.results.slice(0, 4).map((character) => (
-          <View key={character.id}>
-            <TouchableOpacity
-              style={styles.itemCell}
-              onPress={() => navigateToCharacterInfo(character)}
-            >
-              <Typography variant="paragraph" text={character.name} />
-            </TouchableOpacity>
-          </View>
-        ))}
+        {charactersData.characters.results.length > 0 ? (
+          charactersData.characters.results.slice(0, 4).map((character) => (
+            <View key={character.id}>
+              <TouchableOpacity
+                style={styles.itemCell}
+                onPress={() => navigateToCharacterInfo(character)}
+              >
+                <Typography variant="paragraph" text={character.name} />
+              </TouchableOpacity>
+            </View>
+          ))
+        ) : (
+          <Typography text="Nothing found" variant="paragraph" />
+        )}
       </View>
       <Typography
         styleOverride={styles.charactersTitle}
@@ -104,16 +110,20 @@ export const SearchView = ({ navigation }) => {
         bold
       />
       <View style={styles.episodesList}>
-        {episodesData.episodes.results.slice(0, 4).map((episode) => (
-          <View key={episode.id}>
-            <TouchableOpacity
-              style={styles.itemCell}
-              onPress={() => navigateToEpisodeInfo(episode)}
-            >
-              <Typography variant="paragraph" text={episode.name} />
-            </TouchableOpacity>
-          </View>
-        ))}
+        {episodesData.episodes.results.length > 0 ? (
+          episodesData.episodes.results.slice(0, 4).map((episode) => (
+            <View key={episode.id}>
+              <TouchableOpacity
+                style={styles.itemCell}
+                onPress={() => navigateToEpisodeInfo(episode)}
+              >
+                <Typography variant="paragraph" text={episode.name} />
+              </TouchableOpacity>
+            </View>
+          ))
+        ) : (
+          <Typography text="Nothing found" variant="paragraph" />
+        )}
       </View>
     </ScrollView>
   )

@@ -13,13 +13,14 @@ const mocks = [EPISODE_INFO]
 const route = { params: EPISODE_INFO_VARIABLES }
 
 describe("Titles test", () => {
-  it("display episode title", async () => {
+  it("display episode titles", async () => {
     const navigation = jest.fn()
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         {<EpisodesInfo navigation={navigation} route={route} />}
       </MockedProvider>
     )
+    expect(await screen.findByText("Lawnmower Dog"))
     expect(await screen.findByText("S01E02"))
   })
 })
