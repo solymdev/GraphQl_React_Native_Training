@@ -3,7 +3,7 @@ import { useAllCharactersQuery, useAllEpisodesQuery } from "generated/graphql"
 import { debounce } from "lodash"
 import Typography from "components/Typography/Typography"
 import { CharacterQuery } from "models/CharactersQuery"
-import { TouchableOpacity, View, ScrollView } from "react-native"
+import { TouchableOpacity, View, ScrollView, Text } from "react-native"
 import { styles } from "./SearchView.styles"
 import { AnimationLoader } from "./components/AnimationLoader"
 import { EpisodesQuery } from "models/episodesQuery"
@@ -49,10 +49,10 @@ export const SearchView = ({ navigation }) => {
     const { text } = event.nativeEvent
     if (text.length > 0) {
       setSkip(false)
-      setSearchText(event.nativeEvent.text)
     } else {
       setSkip(true)
     }
+    setSearchText(event.nativeEvent.text)
   }
 
   useEffect(() => {
@@ -78,16 +78,11 @@ export const SearchView = ({ navigation }) => {
     <Typography text="Nothing found" variant="paragraph" />
   )
 
-  if (episodesError || charactersError)
-    return <Typography variant="paragraph" text={"Error"} />
+  if (episodesError || charactersError) return <ErrorView />
 
   if (episodesLoading || charactersLoading) return <AnimationLoader />
 
-  if ((!episodesData || !charactersData) && searchText.length > 0)
-    return <ErrorView />
-
-  if ((!episodesData || !charactersData) && searchText.length === 0)
-    return <></>
+  if (!episodesData || !charactersData) return <></>
 
   return (
     <ScrollView style={styles.searchViewContainer}>
