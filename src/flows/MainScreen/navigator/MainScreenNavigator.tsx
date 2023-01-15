@@ -4,13 +4,13 @@ import { MainScreen } from "../screens/MainScreen/MainScreen"
 import EpisodesInfo from "../screens/EpisodesInfo"
 import CharacterInfo from "../screens/CharacterInfo"
 
-const Stack = createNativeStackNavigator()
-
 export enum MainScreenNavigatorScreens {
   MAIN = "Rick & Morty",
   CHARACTER = "Character",
   EPISODE = "Episode",
 }
+
+const Stack = createNativeStackNavigator()
 
 export const MainScreenNavigator = () => {
   return (
