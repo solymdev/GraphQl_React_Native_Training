@@ -15,6 +15,7 @@ import { CharacterQueryGeneral } from "models/CharactersQuery"
 import { EpisodesQueryGeneral } from "models/episodesQuery"
 import { COLORS } from "utils/colors"
 import { AnimationLoader } from "./components/AnimationLoader"
+import ErrorView from "components/ErrorView.tsx"
 
 export const MainScreen = ({ navigation }) => {
   const {
@@ -38,12 +39,7 @@ export const MainScreen = ({ navigation }) => {
       </View>
     )
 
-  if (episodesError || charactersError)
-    return (
-      <View style={styles.errorContainer}>
-        <Text>Ups... something went wrong</Text>
-      </View>
-    )
+  if (episodesError || charactersError) return <ErrorView />
 
   const navigate = (
     screenName: string,

@@ -7,6 +7,7 @@ import { TouchableOpacity, View, ScrollView } from "react-native"
 import { styles } from "./SearchView.styles"
 import { AnimationLoader } from "./components/AnimationLoader"
 import { EpisodesQuery } from "models/episodesQuery"
+import ErrorView from "components/ErrorView.tsx"
 
 export const SearchView = ({ navigation }) => {
   const [searchText, setSearchText] = useState("")
@@ -60,6 +61,7 @@ export const SearchView = ({ navigation }) => {
       headerSearchBarOptions: {
         placeHolder: "Search character or episode",
         onChangeText: (event) => handleTextChange(event),
+        onCancelButtonPress: () => setSearchText(""),
       },
     })
   }, [navigation])
@@ -72,12 +74,20 @@ export const SearchView = ({ navigation }) => {
     navigation.navigate("Episode", data)
   }
 
+  const NothingFound = () => (
+    <Typography text="Nothing found" variant="paragraph" />
+  )
+
   if (episodesError || charactersError)
     return <Typography variant="paragraph" text={"Error"} />
 
   if (episodesLoading || charactersLoading) return <AnimationLoader />
 
-  if (!episodesData || !charactersData) return <></>
+  if ((!episodesData || !charactersData) && searchText.length > 0)
+    return <ErrorView />
+
+  if ((!episodesData || !charactersData) && searchText.length === 0)
+    return <></>
 
   return (
     <ScrollView style={styles.searchViewContainer}>
@@ -100,7 +110,7 @@ export const SearchView = ({ navigation }) => {
             </View>
           ))
         ) : (
-          <Typography text="Nothing found" variant="paragraph" />
+          <NothingFound />
         )}
       </View>
       <Typography
@@ -122,7 +132,7 @@ export const SearchView = ({ navigation }) => {
             </View>
           ))
         ) : (
-          <Typography text="Nothing found" variant="paragraph" />
+          <NothingFound />
         )}
       </View>
     </ScrollView>
